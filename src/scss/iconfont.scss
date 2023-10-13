@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url("@/assets/fonts/iconfont.ttf?t=1651378803492") format("truetype");
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-align-justify:before {
+  content: "\ef13";
+}
+
+.icon-brain:before {
+  content: "\ef4e";
+}
+
+.icon-calculator:before {
+  content: "\ef59";
+}
+
+.icon-file-code:before {
+  content: "\efc4";
+}
+
+.icon-tuite1:before {
+  content: "\e622";
+}
+
+.icon-Google:before {
+  content: "\e602";
+}
+
+.icon-github:before {
+  content: "\ec01";
+}

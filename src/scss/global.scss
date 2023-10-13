@@ -1,0 +1,57 @@
+@import "iconfont.scss";
+$theme-main-color-1: #2e89c0;
+$theme-main-color-2: #5dabdc;
+$theme-main-color-3: #8fd0f0;
+$theme-main-color-2t: #5dabdce8;
+$theme-main-color-3t: #8fd0f0e8;
+$text-gary-color-1: #626a77;
+$text-gary-color-1t: #626a774d;
+$text-gary-color-2: #8f9297;
+$text-gary-color-3: #c8c9c4;
+@font-face {
+  font-family: "Raleway";
+  src: url("@/assets/fonts/Raleway-VariableFont_wght.ttf");
+}
+.handle-default-a {
+  text-decoration: none;
+  color: inherit;
+}
+.handle-el-link {
+  color: inherit;
+  font-size: inherit;
+  vertical-align: baseline;
+  &:hover {
+    color: rgba(0, 0, 0, 0.6);
+    &:after {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+.mps-topimg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 20px 0;
+  .mps-topimg-text {
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 4.5vw;
+    width: 50vw;
+    font-family: "Raleway";
+    font-weight: 600;
+    letter-spacing: 10px;
+    word-spacing: 40px;
+    white-space: nowrap;
+  }
+}
+
+$color-stdblue-1: #2e89c0;
+$color-stdblue-2: #5dabdc;
+$color-stdblue-3: #8fd0f0;
+
+$color-greengray-1: #161e21;
+$color-greengray-2: #2c3c49;
+$color-greengray-3: #607b84;
+$color-greengray-4: #b2c5cb;
