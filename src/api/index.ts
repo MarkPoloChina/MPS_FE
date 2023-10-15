@@ -1,8 +1,7 @@
-import global from "@/ts/global";
 import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
 import axios from "axios";
 
-const ax = axios.create({ baseURL: global.api.baseUrl });
+const ax = axios.create({ baseURL: import.meta.env.VITE_BASE_API });
 
 export class API {
   static getIllustToday = async (date: string): Promise<IllustTodayDto> => {

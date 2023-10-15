@@ -2,7 +2,7 @@
   <header class="mps-comp-client-header">
     <el-link class="mps-logo" @click="$router.push('/')" :underline="false">
       <img class="mps-logo-svg" src="@/assets/img/logo.svg" />
-      <div class="mps-logo-text">Mark Polo Space</div>
+      <div class="mps-logo-text">Mark.Polo.Space</div>
     </el-link>
     <el-menu
       mode="horizontal"
@@ -75,8 +75,9 @@ watch(
   z-index: 10;
   background-color: #ffffffbf;
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 0 0 10px 10px;
-  padding: 0 30px 0 30px;
+  padding: 0 10px 0 30px;
   .mps-logo {
     user-select: none;
     .mps-logo-svg {
@@ -87,7 +88,7 @@ watch(
     }
     .mps-logo-text {
       background: linear-gradient(
-        to bottom,
+        to bottom right,
         $theme-main-color-1,
         $theme-main-color-3
       );
@@ -98,6 +99,11 @@ watch(
       font-size: 30px;
       font-family: "Raleway";
       font-weight: 600;
+    }
+    @media screen and (max-width: $mobile-width) {
+      .mps-logo-text {
+        display: none;
+      }
     }
   }
   .mps-menu {

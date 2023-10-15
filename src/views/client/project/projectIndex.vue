@@ -1,18 +1,23 @@
 <template>
   <div class="mps-view-client-project">
     <div class="mps-topimg">
-      <div class="mps-topimg-text mps-project-topimg">Project</div>
+      <div class="mps-topimg-text">
+        <div class="bg"></div>
+        <div class="tx">Project</div>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts"></script>
 <style lang="scss" scoped>
-.mps-project-topimg {
+.bg {
   background-position: 50% 40%;
   background-repeat: no-repeat;
   background-size: cover;
-  color: $text-gary-color-1;
-  text-align: center;
   background-image: url("@/assets/img/67649510_p0.png");
+}
+.tx {
+  color: white;
+  background-color: $color-greengray-3;
 }
 </style>

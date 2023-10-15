@@ -1,21 +1,20 @@
 <template>
-  <footer class="mps-comp-client-footer-container">
-    <div class="mps-comp-client-footer">
-      <div class="mps-footer-row">
-        <a
-          href="https://beian.miit.gov.cn/"
-          target="_blank"
-          class="handle-default-a"
-          >闽ICP备2020022020号-2</a
-        >
-      </div>
-      <div class="mps-footer-row">
-        Copyright © 2020-{{ thisYear }} MP Studio, All Rights Reserved.
-        <el-link class="handle-el-link" @click="dialogVisible = true"
-          >[README]</el-link
-        >
-      </div>
-      <!-- <div
+  <footer class="mps-comp-client-footer">
+    <div class="mps-footer-row">
+      <a
+        href="https://beian.miit.gov.cn/"
+        target="_blank"
+        class="handle-default-a"
+        >闽ICP备2020022020号-2</a
+      >
+    </div>
+    <div class="mps-footer-row">
+      Copyright © 2020-{{ thisYear }} MP Studio, All Rights Reserved.
+      <el-link class="handle-el-link" @click="dialogVisible = true"
+        >[README]</el-link
+      >
+    </div>
+    <!-- <div
         style="
           width: 300px;
           margin: 0 auto;
@@ -46,7 +45,6 @@
           </p></a
         >
       </div> -->
-    </div>
   </footer>
   <el-dialog v-model="dialogVisible" title="About" width="50%">
     <div class="mps-view-client-about">
@@ -69,10 +67,6 @@ const thisYear = new Date().getFullYear();
 const dialogVisible = ref(false);
 </script>
 <style lang="scss" scoped>
-.mps-comp-client-footer-container {
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(3px);
-}
 .mps-comp-client-footer {
   width: 100%;
   display: flex;
@@ -91,7 +85,6 @@ const dialogVisible = ref(false);
 .mps-view-client-about {
   width: 100%;
   position: relative;
-  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 20px;
   text-align: center;
   padding: 10px 0 10px 0;

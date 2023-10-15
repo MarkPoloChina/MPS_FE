@@ -179,6 +179,7 @@ const url = global.url;
           justify-content: flex-start;
           align-items: flex-start;
           flex-wrap: wrap;
+          word-break: break-word;
           > div {
             margin: 10px 20px 10px 0;
           }

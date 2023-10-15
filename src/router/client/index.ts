@@ -22,6 +22,10 @@ const routes = [
       },
       {
         path: "illust",
+        redirect: "illust/latest",
+      },
+      {
+        path: "illust/:date",
         name: "illust",
         meta: { title: "插画" },
         component: () => import("@/views/client/illust/illustIndex.vue"),

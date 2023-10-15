@@ -55,15 +55,27 @@
         <div>
           <el-button :icon="ArrowRight" circle @click="handleGetNext" />
         </div>
-        <div>
-          <el-button type="info" :icon="Calendar" circle />
-        </div>
-        <div>
-          <el-button type="primary" :icon="Share" circle />
-        </div>
+        <el-popover
+          placement="left"
+          title="Date Picker"
+          :width="260"
+          trigger="click"
+        >
+          <el-date-picker
+            v-model="currentDate"
+            value-format="YYYY-MM-DD"
+            type="date"
+            placeholder="Pick a day"
+          />
+          <template #reference>
+            <div>
+              <el-button type="info" :icon="Calendar" circle />
+            </div>
+          </template>
+        </el-popover>
         <div>
           <el-button
-            type="success"
+            type="primary"
             :icon="Download"
             circle
             @click="handleDownload(currentIT.url)"
@@ -74,44 +86,47 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import {
   ArrowLeft,
   ArrowRight,
   Calendar,
-  Share,
   Download,
 } from "@element-plus/icons-vue";
 import { API } from "@/api";
 import { ElMessage } from "element-plus";
 import { IllustTodayObj } from "@/ts/interface/illustTodayObj";
 import { IllustTodayDto } from "@/ts/interface/illustTodayDto";
+import { useRoute, useRouter } from "vue-router";
 const downloadLink = ref<HTMLAnchorElement>();
 const currentIT = ref<IllustTodayObj>();
-const isLoading = ref(true);
 const isImageLoading = ref(true);
-// const currentDate = ref('')
-onMounted(() => {
-  getIllustTodayLatest();
-});
-// const getDate = (date: string) => {
-//   const str = new Date(date).toISOString();
-//   const _date = new Date(str.replace("Z", "-08:00"));
-//   return _date.toISOString().slice(0, 10).replace(/[-]/g, "-");
-// };
-// const getIllustTodayFor = (date: string) => {
-//   API.getIllustToday(date).then((resp) => {
-//     currentIT.value = parseObj(resp);
-//   });
-// };
+const route = useRoute();
+const router = useRouter();
+const currentDate = ref("");
+onMounted(() => {});
+
+const getIllustTodayFor = async (date: string) => {
+  try {
+    const obj = await API.getIllustToday(date);
+    currentIT.value = parseObj(obj);
+  } catch {
+    router.replace("/illust/latest").then(() => {
+      ElMessage.error("date格式错误或不存在");
+    });
+  }
+};
+const initIllust = () => {
+  if (route.params.date === "latest") getIllustTodayLatest();
+  else getIllustTodayFor(route.params.date as string);
+};
 const getIllustTodayLatest = async () => {
   const obj = await API.getIllustTodayLatest();
-  // currentDate.value = getDate(obj.date)
   currentIT.value = parseObj(obj);
-  isLoading.value = false;
 };
 const parseObj = (dto: IllustTodayDto) => {
-  isImageLoading.value = true;
+  if (!currentIT.value || currentIT.value.date !== dto.date)
+    isImageLoading.value = true;
   const obj: IllustTodayObj = {
     url:
       dto.type == "pixiv"
@@ -127,32 +142,26 @@ const parseObj = (dto: IllustTodayDto) => {
 };
 const handleGetNext = async () => {
   try {
-    isLoading.value = true;
     const obj = await API.getIllustTodayNext(currentIT.value!.date);
     if (!obj) {
       ElMessage.error("没有后一张");
       return;
     }
-    currentIT.value = parseObj(obj);
+    router.push(`/illust/${obj.date}`);
   } catch {
     ElMessage.error("网络错误");
-  } finally {
-    isLoading.value = false;
   }
 };
 const handleGetPre = async () => {
   try {
-    isLoading.value = true;
     const obj = await API.getIllustTodayPre(currentIT.value!.date);
     if (!obj) {
       ElMessage.error("没有前一张");
       return;
     }
-    currentIT.value = parseObj(obj);
+    router.push(`/illust/${obj.date}`);
   } catch {
     ElMessage.error("网络错误");
-  } finally {
-    isLoading.value = false;
   }
 };
 const handleDownload = (url: string) => {
@@ -161,6 +170,18 @@ const handleDownload = (url: string) => {
     downloadLink.value?.click();
   }
 };
+watch(
+  () => route.params.date,
+  () => {
+    if (route.path.startsWith("/illust")) initIllust();
+  },
+  {
+    immediate: true,
+  },
+);
+watch(currentDate, (val) => {
+  if (val) router.push(`/illust/${val}`);
+});
 </script>
 <style lang="scss" scoped>
 .mps-illust-pictd {
@@ -180,7 +201,7 @@ const handleDownload = (url: string) => {
     }
 
     .mps-illust-pictd-func {
-      padding: 0 20px 0 10px;
+      padding: 0 20px 0 50px;
       flex: none;
       display: flex;
       flex-direction: column;
@@ -189,6 +210,11 @@ const handleDownload = (url: string) => {
 
       div + div {
         margin-top: 10px;
+      }
+    }
+    @media screen and (max-width: $mobile-width) {
+      .mps-illust-pictd-func {
+        padding-left: 10px;
       }
     }
   }
@@ -206,22 +232,27 @@ const handleDownload = (url: string) => {
       flex: auto;
       font-family: "Raleway";
       text-align: center;
-      font-size: 5vw;
+      font-size: 35px;
       font-weight: 600;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin: 10px 20px;
+      flex: none;
 
       span {
-        font-size: 3vw;
+        font-size: 30px;
         font-weight: 300;
       }
     }
 
     .mps-illust-info {
       // display: inline-block;
-      width: 60%;
+      word-wrap: break-word;
+      word-break: break-word;
+      margin: 10px;
+      flex: auto;
 
       .mps-illust-info-line {
         display: flex;
@@ -232,7 +263,7 @@ const handleDownload = (url: string) => {
 
         .mps-illust-info-line-content {
           font-family: "Raleway";
-          font-size: 2vw;
+          font-size: 20px;
           font-weight: 300;
           display: flex;
           flex-direction: row;
@@ -245,6 +276,11 @@ const handleDownload = (url: string) => {
           }
         }
       }
+    }
+  }
+  @media screen and (max-width: $mobile-width) {
+    .mps-illust-pictd-info-container {
+      flex-direction: column;
     }
   }
 }

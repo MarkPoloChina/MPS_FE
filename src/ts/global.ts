@@ -7,10 +7,6 @@ export default {
   },
   version: {
     frontend: packageJson.version,
-    fe_lastUpdate: "2023.10.13",
-  },
-  api: {
-    baseUrl: "https://api.markpolo.cn/v1",
-    // baseUrl: "http://localhost:3000/v1",
+    fe_lastUpdate: "2023.10.15",
   },
 };

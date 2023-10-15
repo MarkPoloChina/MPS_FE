@@ -1,7 +1,7 @@
 {
   "name": "mps_fe",
   "private": true,
-  "version": "3.2.0",
+  "version": "3.2.1",
   "type": "module",
   "description": "MarkPolo Space fackend project.",
   "author": {
@@ -9,7 +9,7 @@
     "email": "1228479724@qq.com"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },

@@ -8,6 +8,20 @@ $text-gary-color-1: #626a77;
 $text-gary-color-1t: #626a774d;
 $text-gary-color-2: #8f9297;
 $text-gary-color-3: #c8c9c4;
+
+$color-stdblue-1: #2e89c0;
+$color-stdblue-2: #5dabdc;
+$color-stdblue-3: #8fd0f0;
+
+$color-greengray-1: #161e21;
+$color-greengray-2: #2c3c49;
+$color-greengray-3: #607b84;
+$color-greengray-4: #b2c5cb;
+
+$mobile-width: 576px;
+$pad-width: 768px;
+$desktop-width: 992px;
+$large-desktop-width: 1200px;
 @font-face {
   font-family: "Raleway";
   src: url("@/assets/fonts/Raleway-VariableFont_wght.ttf");
@@ -30,28 +44,36 @@ $text-gary-color-3: #c8c9c4;
 .mps-topimg {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0 0 20px 0;
+  padding: 0 0 20px 0;
   .mps-topimg-text {
-    padding: 20px;
-    border-radius: 20px;
-    font-size: 4.5vw;
-    width: 50vw;
-    font-family: "Raleway";
-    font-weight: 600;
-    letter-spacing: 10px;
-    word-spacing: 40px;
-    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 150px;
+    .bg {
+      border-radius: 15px 15px 0 0;
+      height: 60%;
+      width: 100%;
+    }
+    .tx {
+      border-radius: 0 0 15px 15px;
+      height: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      font-family: "Raleway";
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+  @media screen and (max-width: $mobile-width) {
+    .mps-topimg-text {
+      width: 75%;
+    }
   }
 }
 
-$color-stdblue-1: #2e89c0;
-$color-stdblue-2: #5dabdc;
-$color-stdblue-3: #8fd0f0;
 
-$color-greengray-1: #161e21;
-$color-greengray-2: #2c3c49;
-$color-greengray-3: #607b84;
-$color-greengray-4: #b2c5cb;
