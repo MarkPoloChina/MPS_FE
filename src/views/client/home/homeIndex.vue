@@ -1,5 +1,5 @@
 <template>
-  <div class="mps-view-client-index">
+  <div>
     <index-carousel></index-carousel>
     <index-intro></index-intro>
   </div>
@@ -10,8 +10,4 @@ import IndexIntro from "@/components/client/home/homeIntro.vue";
 import { onMounted } from "vue";
 onMounted(() => {});
 </script>
-<style lang="scss" scoped>
-.mps-view-client-index {
-  width: 100%;
-}
-</style>
+<style lang="scss" scoped></style>

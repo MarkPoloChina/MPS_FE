@@ -46,6 +46,7 @@
         :preview-src-list="[currentIT.url]"
         fit="contain"
         @load="isImageLoading = false"
+        preview-teleported
       >
       </el-image>
       <div class="mps-illust-pictd-func">
@@ -186,7 +187,7 @@ watch(currentDate, (val) => {
 <style lang="scss" scoped>
 .mps-illust-pictd {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: $bg-color-1;
   border-radius: 20px;
 
   .mps-illust-pictd-img-container {
@@ -224,7 +225,7 @@ watch(currentDate, (val) => {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: $bg-color-2;
     border-radius: 20px;
 
     .mps-illust-pictd-title {

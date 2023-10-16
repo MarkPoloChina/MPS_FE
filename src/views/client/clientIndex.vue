@@ -15,8 +15,6 @@ import ClientFooter from "@/components/client/clientFooter.vue";
 </script>
 <style lang="scss" scoped>
 .mps-view-client-bg {
-  width: 100%;
-  background-size: auto 100%;
   background-position: center;
   background-attachment: fixed;
   background-size: cover;
@@ -24,12 +22,12 @@ import ClientFooter from "@/components/client/clientFooter.vue";
   .mps-view-client {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $bg-color-1;
     .mps-view-client-main {
       position: relative;
-      padding-top: 70px;
+      padding-top: 30px;
       padding-bottom: 30px;
-      min-height: calc(100vh - 100px);
+      min-height: calc(100vh - 110px);
     }
   }
 }

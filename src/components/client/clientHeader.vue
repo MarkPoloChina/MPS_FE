@@ -66,14 +66,12 @@ watch(
 </script>
 <style lang="scss" scoped>
 .mps-comp-client-header {
-  position: fixed;
   width: calc(100% - 40px);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
-  background-color: #ffffffbf;
+  background-color: $bg-color-2;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 0 0 10px 10px;

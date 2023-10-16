@@ -87,17 +87,23 @@
           <div class="mps-intro-group">
             <div class="mps-intro-contact">
               <span class="iconfont">&#xe602;</span>
-              <div>{{ url.email }}</div>
+              <div>26239122xzw@gmail.com</div>
             </div>
             <div class="mps-intro-contact">
               <span class="iconfont">&#xe622;</span>
-              <a :href="url.twitter" class="handle-default-a" target="_blank"
+              <a
+                href="https://twitter.com/MarkXiong16"
+                class="handle-default-a"
+                target="_blank"
                 >@MarkXiong16</a
               >
             </div>
             <div class="mps-intro-contact">
               <span class="iconfont">&#xec01;</span>
-              <a :href="url.github" class="handle-default-a" target="_blank"
+              <a
+                href="https://github.com/MarkPoloChina"
+                class="handle-default-a"
+                target="_blank"
                 >MarkPoloChina</a
               >
             </div>
@@ -108,7 +114,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import global from "@/ts/global";
 import {
   Promotion,
   House,
@@ -120,7 +125,6 @@ import {
   ChatDotRound,
 } from "@element-plus/icons-vue";
 import avatar from "@/assets/img/avatar.jpg";
-const url = global.url;
 </script>
 <style lang="scss" scoped>
 .mps-comp-index-intro {

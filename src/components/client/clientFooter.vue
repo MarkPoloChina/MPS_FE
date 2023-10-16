@@ -9,7 +9,7 @@
       >
     </div>
     <div class="mps-footer-row">
-      Copyright © 2020-{{ thisYear }} MP Studio, All Rights Reserved.
+      Copyright © 2020-2023 MP Studio, All Rights Reserved.
       <el-link class="handle-el-link" @click="dialogVisible = true"
         >[README]</el-link
       >
@@ -46,25 +46,38 @@
         >
       </div> -->
   </footer>
-  <el-dialog v-model="dialogVisible" title="About" width="50%">
-    <div class="mps-view-client-about">
-      <div class="mps-about-thank">
-        <div>Thank You for visitting MPS !!!</div>
+  <el-dialog v-model="dialogVisible" title="About" width="80%" append-to-body>
+    <div class="mps-about">
+      <div class="mps-about-head">
+        <img src="@/assets/img/logo.svg" />
+        <div>Mark Polo Space Powered by MPSTO.</div>
+      </div>
+      <div class="mps-about-lib">
+        <div>
+          <img src="@/assets/img/vue-logo.svg" />
+          <div>Vue - The MIT License</div>
+        </div>
+        <div>
+          <img src="@/assets/img/element-plus-logo.svg" />Element Plus - The MIT
+          License
+        </div>
       </div>
       <div class="mps-about-version">
         <div>
-          Front-end Ver.{{ global.version.frontend }}
-          {{ global.version.fe_lastUpdate }}
+          Build.Frontend Ver.{{ FE_VERSION }}
+          {{ FE_UPDATE }}
         </div>
+        <div>Copyright © 2020-2023 MP Studio, All Rights Reserved.</div>
       </div>
     </div>
   </el-dialog>
 </template>
 <script setup lang="ts">
+import packageJson from "../../../package.json";
 import { ref } from "vue";
-import global from "@/ts/global";
-const thisYear = new Date().getFullYear();
 const dialogVisible = ref(false);
+const FE_UPDATE = import.meta.env.VITE_FE_UPDATE;
+const FE_VERSION = packageJson.version;
 </script>
 <style lang="scss" scoped>
 .mps-comp-client-footer {
@@ -75,23 +88,40 @@ const dialogVisible = ref(false);
   align-items: center;
   border-radius: 20px 20px 0 0;
   padding: 10px 0 10px 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: $bg-color-2;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   .mps-footer-row {
     width: 100%;
     text-align: center;
     margin: 10px 0 0 0;
   }
 }
-.mps-view-client-about {
-  width: 100%;
-  position: relative;
-  border-radius: 20px;
+.mps-about {
   text-align: center;
-  padding: 10px 0 10px 0;
-  .mps-about-thank {
+  .mps-about-head {
     padding: 20px 0 20px 0;
     font-size: 30px;
     font-weight: bold;
+    img {
+      height: 50px;
+    }
+  }
+  .mps-about-lib {
+    padding: 20px 0 20px 0;
+    > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      img {
+        height: 25px;
+        margin-right: 5px;
+      }
+    }
+  }
+  .mps-about-version {
+    padding: 20px 0 20px 0;
   }
 }
 </style>

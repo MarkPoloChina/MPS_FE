@@ -1,5 +1,5 @@
 <template>
-  <div class="mps-view-client-illust">
+  <div>
     <div class="mps-topimg">
       <div class="mps-topimg-text">
         <div class="bg"></div>
