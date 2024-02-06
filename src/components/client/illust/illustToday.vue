@@ -12,9 +12,6 @@
           <div class="mps-illust-info-line-content">
             {{ currentIT.type }}
           </div>
-          <div class="mps-illust-info-line-content" v-if="currentIT.pid">
-            {{ currentIT.pid }}
-          </div>
         </div>
         <div class="mps-illust-info-line">
           <div class="mps-illust-info-line-content" v-if="currentIT.char">
@@ -30,9 +27,9 @@
           <div class="mps-illust-info-line-content">
             <el-link
               class="handle-el-link"
-              :href="currentIT.url"
+              :href="currentIT.source"
               target="_blank"
-              >{{ currentIT.url }}</el-link
+              >{{ currentIT.source }}</el-link
             >
           </div>
         </div>
@@ -99,6 +96,7 @@ import { ElMessage } from "element-plus";
 import { IllustTodayObj } from "@/ts/interface/illustTodayObj";
 import { IllustTodayDto } from "@/ts/interface/illustTodayDto";
 import { useRoute, useRouter } from "vue-router";
+import { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
 const downloadLink = ref<HTMLAnchorElement>();
 const currentIT = ref<IllustTodayObj>();
 const isImageLoading = ref(true);
@@ -110,7 +108,8 @@ onMounted(() => {});
 const getIllustTodayFor = async (date: string) => {
   try {
     const obj = await API.getIllustToday(date);
-    currentIT.value = parseObj(obj);
+    const rb = await API.getRemoteBase(obj.type);
+    currentIT.value = parseObj(obj, rb);
   } catch {
     router.replace("/illust/latest").then(() => {
       ElMessage.error("date格式错误或不存在");
@@ -123,21 +122,21 @@ const initIllust = () => {
 };
 const getIllustTodayLatest = async () => {
   const obj = await API.getIllustTodayLatest();
-  currentIT.value = parseObj(obj);
+  const rb = await API.getRemoteBase(obj.type);
+  currentIT.value = parseObj(obj, rb);
 };
-const parseObj = (dto: IllustTodayDto) => {
+const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
   if (!currentIT.value || currentIT.value.date !== dto.date)
     isImageLoading.value = true;
   const obj: IllustTodayObj = {
-    url:
-      dto.type == "pixiv"
-        ? `https://pixiv.re/${dto.target}.jpg`
-        : `https://alist.markpolo.cn/d${dto.target}`,
-    pid: dto.type == "pixiv" ? dto.target.split("-")[0] : "",
+    url: rbdto.target.startsWith("/")
+      ? `https://alist.markpolo.cn/d${rbdto.target}/${dto.target}`
+      : `${rbdto.target}/${dto.target}.jpg`,
     tags: dto.tags ? dto.tags.split(",") : [],
     date: dto.date,
     type: dto.type,
     char: dto.char,
+    source: dto.source,
   };
   return obj;
 };

@@ -1,4 +1,5 @@
 import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
+import { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
 import axios from "axios";
 
 const ax = axios.create({ baseURL: import.meta.env.VITE_BASE_API });
@@ -21,6 +22,11 @@ export class API {
 
   static getIllustTodayNext = async (date: string): Promise<IllustTodayDto> => {
     const resp = await ax.get(`/illust-today/next/${date}`);
+    return resp.data;
+  };
+
+  static getRemoteBase = async (name: string): Promise<RemoteBaseDto> => {
+    const resp = await ax.get(`/illust-today/remote-base/${name}`);
     return resp.data;
   };
 }

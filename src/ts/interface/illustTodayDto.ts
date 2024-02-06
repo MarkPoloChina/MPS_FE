@@ -5,4 +5,5 @@ export interface IllustTodayDto {
   tags?: string;
   char?: string;
   date: string;
+  source?: string;
 }
