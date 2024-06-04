@@ -5,6 +5,16 @@ import axios from "axios";
 const ax = axios.create({ baseURL: import.meta.env.VITE_BASE_API });
 
 export class API {
+  static getVersion = async (): Promise<string> => {
+    const resp = await ax.get("/version");
+    return resp.data;
+  };
+
+  static getDate = async (): Promise<string> => {
+    const resp = await ax.get("/date");
+    return resp.data;
+  };
+
   static getIllustToday = async (date: string): Promise<IllustTodayDto> => {
     const resp = await ax.get(`/illust-today/${date}`);
     return resp.data;

@@ -12,11 +12,8 @@
     <div class="mps-title-container">
       <div class="mps-title">
         <div class="mps-title-blur">
-          <div class="mps-title-mp mps-title-text">Mark Polo</div>
-          <div class="mps-title-design mps-title-text">
-            markpolo.cn Powered by MPSTO
-          </div>
-          <div class="mps-title-ver mps-title-text">MPS Now Available.</div>
+          <div class="mps-title-mp mps-title-text">(*￣︶￣)</div>
+          <div class="mps-title-design mps-title-text">Powered by MPSTO</div>
         </div>
       </div>
     </div>
@@ -85,10 +82,14 @@ onMounted(() => {});
           font-weight: 300;
         }
 
-        &.mps-title-ver {
-          margin: 10px 0 10px 0;
-          font-size: 35px;
-          font-weight: 300;
+        @media screen and (max-width: $mobile-width) {
+          &.mps-title-mp {
+            font-size: 50px;
+          }
+
+          &.mps-title-design {
+            font-size: 20px;
+          }
         }
       }
     }

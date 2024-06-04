@@ -2,7 +2,7 @@
   <header class="mps-comp-client-header">
     <el-link class="mps-logo" @click="$router.push('/')" :underline="false">
       <img class="mps-logo-svg" src="@/assets/img/logo.svg" />
-      <div class="mps-logo-text">Mark.Polo.Space</div>
+      <div class="mps-logo-text">MarkPoloSpace</div>
     </el-link>
     <el-menu
       mode="horizontal"
@@ -82,9 +82,9 @@ watch(
       width: 35px;
       height: 35px;
       padding: 3px;
-      margin: 0 15px 0 0;
     }
     .mps-logo-text {
+      margin: 0 15px 0 15px;
       background: linear-gradient(
         to bottom right,
         $theme-main-color-1,
