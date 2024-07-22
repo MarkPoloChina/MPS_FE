@@ -1,6 +1,6 @@
 <template>
   <div class="mps-comp-index-carousel">
-    <el-carousel indicator-position="outside" height="750px" :interval="5000">
+    <el-carousel indicator-position="outside" :interval="5000">
       <el-carousel-item
         v-for="item in [cover1, cover2, cover3, cover4]"
         :key="item"
@@ -30,13 +30,19 @@ onMounted(() => {});
 <style lang="scss" scoped>
 .mps-comp-index-carousel {
   position: relative;
+  :deep(.el-carousel__container) {
+    height: 750px;
+    @media screen and (max-width: $mobile-width) {
+      height: 350px;
+    }
+  }
 
   .mps-comp-index-carousel-main {
     border-radius: 20px;
 
     .mps-cover-img {
       width: 100%;
-      height: 750px;
+      height: 100%;
     }
   }
 
@@ -55,7 +61,7 @@ onMounted(() => {});
       height: 100%;
       width: 100%;
       flex-direction: column;
-      justify-content: center;
+      justify-content: end;
       align-items: center;
 
       .mps-title-blur {
@@ -64,6 +70,7 @@ onMounted(() => {});
         -webkit-backdrop-filter: blur(3px);
         padding: 20px 20px 20px 20px;
         border-radius: 20px;
+        margin-bottom: 30px;
       }
 
       .mps-title-text {

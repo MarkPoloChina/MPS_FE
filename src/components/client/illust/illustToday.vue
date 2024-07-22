@@ -17,7 +17,7 @@
           <div class="mps-illust-info-line-content" v-if="currentIT.char">
             <el-tag effect="dark">{{ currentIT.char }}</el-tag>
           </div>
-          <div class="mps-illust-info-line-content" v-if="currentIT.tags">
+          <div class="mps-illust-info-line-content tags" v-if="currentIT.tags">
             <el-tag effect="dark" v-for="tag in currentIT.tags" :key="tag">{{
               tag
             }}</el-tag>
@@ -193,7 +193,7 @@ watch(currentDate, (val) => {
     padding: 10px;
     position: relative;
     display: flex;
-    height: 500px;
+    height: calc(100vh - 200px);
 
     .mps-illust-pictd-img {
       border-radius: 20px;
@@ -213,6 +213,7 @@ watch(currentDate, (val) => {
       }
     }
     @media screen and (max-width: $mobile-width) {
+      height: auto;
       .mps-illust-pictd-func {
         padding-left: 10px;
       }
@@ -260,6 +261,12 @@ watch(currentDate, (val) => {
         justify-content: space-between;
         align-items: center;
         margin: 15px 0 15px 0;
+        @media screen and (max-width: $mobile-width) {
+          flex-direction: column;
+          .tags {
+            display: none;
+          }
+        }
 
         .mps-illust-info-line-content {
           font-family: "Raleway";
@@ -270,6 +277,11 @@ watch(currentDate, (val) => {
           justify-content: flex-start;
           align-items: center;
           flex-wrap: wrap;
+          @media screen and (max-width: $mobile-width) {
+            &.tags {
+              display: none;
+            }
+          }
 
           .el-tag {
             margin: 5px 10px 5px 0;

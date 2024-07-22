@@ -38,8 +38,8 @@
           </el-icon>
           <div class="mps-intro-group">
             <div>
-              <el-link class="handle-el-link" @click="$router.push('/image')"
-                >Images</el-link
+              <el-link class="handle-el-link" @click="$router.push('/illust')"
+                >Illust</el-link
               >, sharing some pics.
             </div>
           </div>
@@ -159,6 +159,9 @@ import avatar from "@/assets/img/avatar.jpg";
         font-family: "Raleway";
         font-weight: 400;
         font-size: 30px;
+        @media screen and (max-width: $mobile-width) {
+          font-size: 25px;
+        }
       }
     }
     .mps-intro-main {
@@ -171,7 +174,9 @@ import avatar from "@/assets/img/avatar.jpg";
         font-size: 20px;
         font-family: "Raleway";
         font-weight: 200;
-        font-size: 20px;
+        @media screen and (max-width: $mobile-width) {
+          font-size: 18px;
+        }
         .mps-intro-icon {
           flex: none;
           margin-right: 30px;
@@ -196,6 +201,9 @@ import avatar from "@/assets/img/avatar.jpg";
           span {
             margin: 0 10px 0 0;
             font-size: 22px;
+            @media screen and (max-width: $mobile-width) {
+              font-size: 20px;
+            }
           }
         }
       }
