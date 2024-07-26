@@ -48,10 +48,20 @@
       </el-image>
       <div class="mps-illust-pictd-func">
         <div>
-          <el-button :icon="ArrowLeft" circle @click="handleGetPre" />
+          <el-button
+            :icon="ArrowLeft"
+            circle
+            @click="handleGetPre"
+            size="large"
+          />
         </div>
         <div>
-          <el-button :icon="ArrowRight" circle @click="handleGetNext" />
+          <el-button
+            :icon="ArrowRight"
+            circle
+            @click="handleGetNext"
+            size="large"
+          />
         </div>
         <el-popover
           placement="left"
@@ -67,7 +77,7 @@
           />
           <template #reference>
             <div>
-              <el-button type="info" :icon="Calendar" circle />
+              <el-button type="info" :icon="Calendar" circle size="large" />
             </div>
           </template>
         </el-popover>
@@ -77,6 +87,7 @@
             :icon="Download"
             circle
             @click="handleDownload(currentIT.url)"
+            size="large"
           />
         </div>
       </div>
@@ -177,7 +188,7 @@ watch(
   },
   {
     immediate: true,
-  },
+  }
 );
 watch(currentDate, (val) => {
   if (val) router.push(`/illust/${val}`);
@@ -188,15 +199,23 @@ watch(currentDate, (val) => {
   position: relative;
   background-color: $bg-color-1;
   border-radius: 20px;
+  margin: 0 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  @media screen and (max-width: $mobile-width) {
+    margin: 0;
+  }
 
   .mps-illust-pictd-img-container {
     padding: 10px;
     position: relative;
     display: flex;
     height: calc(100vh - 200px);
+    @media screen and (max-width: $mobile-width) {
+      flex-direction: column-reverse;
+      height: auto;
+    }
 
     .mps-illust-pictd-img {
-      border-radius: 20px;
       flex: auto;
     }
 
@@ -207,15 +226,13 @@ watch(currentDate, (val) => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
-      div + div {
-        margin-top: 10px;
+      @media screen and (max-width: $mobile-width) {
+        padding: 0;
+        flex-direction: row;
       }
-    }
-    @media screen and (max-width: $mobile-width) {
-      height: auto;
-      .mps-illust-pictd-func {
-        padding-left: 10px;
+
+      div {
+        margin: 10px;
       }
     }
   }
@@ -227,6 +244,9 @@ watch(currentDate, (val) => {
     justify-content: space-between;
     background-color: $bg-color-2;
     border-radius: 20px;
+    @media screen and (max-width: $mobile-width) {
+      flex-direction: column;
+    }
 
     .mps-illust-pictd-title {
       // display: inline-block;
@@ -263,6 +283,7 @@ watch(currentDate, (val) => {
         margin: 15px 0 15px 0;
         @media screen and (max-width: $mobile-width) {
           flex-direction: column;
+          margin: 5px 0 5px 0;
           .tags {
             display: none;
           }
@@ -283,16 +304,11 @@ watch(currentDate, (val) => {
             }
           }
 
-          .el-tag {
-            margin: 5px 10px 5px 0;
+          .el-tag + .el-tag {
+            margin: 5px 0 5px 10px;
           }
         }
       }
-    }
-  }
-  @media screen and (max-width: $mobile-width) {
-    .mps-illust-pictd-info-container {
-      flex-direction: column;
     }
   }
 }

@@ -15,18 +15,35 @@ const routes = [
         name: "blog",
         meta: { title: "博客" },
         component: () => import("@/views/client/blog/blogIndex.vue"),
-        // children:[{
-        //   path:'',
-        //   name: 'blogIndex'
-        // }]
+        children: [
+          {
+            path: "",
+            name: "blogHome",
+            component: () => import("@/views/client/blog/blogHome.vue"),
+          },
+          {
+            path: "article/:id",
+            name: "blogArticle",
+            component: () => import("@/views/client/blog/blogArticle.vue"),
+          },
+          {
+            path: "tag/:id",
+            name: "blogArticleUnderTag",
+            component: () => import("@/views/client/blog/blogUnderTag.vue"),
+          },
+        ],
       },
       {
         path: "illust",
-        redirect: "illust/latest",
+        name: "illust",
+        redirect: {
+          name: "illustDate",
+          params: { date: "latest" },
+        },
       },
       {
         path: "illust/:date",
-        name: "illust",
+        name: "illustDate",
         meta: { title: "插画" },
         component: () => import("@/views/client/illust/illustIndex.vue"),
       },

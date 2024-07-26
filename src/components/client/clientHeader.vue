@@ -9,8 +9,8 @@
       :ellipsis="false"
       class="mps-menu"
       background-color="transparent"
-      :default-active="activeIndex"
-      router
+      :default-active="`/${route.path.split('/')[1]}`"
+      @select="(item: string) => router.push(item)"
     >
       <el-menu-item index="/" class="mps-menu-icon">
         <el-icon><house></house></el-icon
@@ -34,35 +34,9 @@ import {
   Picture as PictureIcon,
   Files,
 } from "@element-plus/icons-vue";
-import { onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
-const activeIndex = ref("");
-onMounted(() => {
-  activeIndex.value = route.path.startsWith("/blog")
-    ? "/blog"
-    : route.path.startsWith("/illust")
-    ? "/illust"
-    : route.path.startsWith("/project")
-    ? "/project"
-    : route.path.startsWith("/")
-    ? "/"
-    : "";
-});
-watch(
-  () => route.path,
-  () => {
-    activeIndex.value = route.path.startsWith("/blog")
-      ? "/blog"
-      : route.path.startsWith("/illust")
-      ? "/illust"
-      : route.path.startsWith("/project")
-      ? "/project"
-      : route.path.startsWith("/")
-      ? "/"
-      : "";
-  },
-);
+const router = useRouter();
 </script>
 <style lang="scss" scoped>
 .mps-comp-client-header {
@@ -74,7 +48,6 @@ watch(
   background-color: $bg-color-2;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: 0 0 10px 10px;
   padding: 0 10px 0 30px;
   .mps-logo {
     user-select: none;
@@ -97,9 +70,7 @@ watch(
       font-size: 30px;
       font-family: "Raleway";
       font-weight: 600;
-    }
-    @media screen and (max-width: $mobile-width) {
-      .mps-logo-text {
+      @media screen and (max-width: $mobile-width) {
         display: none;
       }
     }

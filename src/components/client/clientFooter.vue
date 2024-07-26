@@ -1,7 +1,10 @@
 <template>
   <footer class="mps-comp-client-footer">
+    <div class="mps-footer-row">
+      <img src="@/assets/img/logo.svg" style="height: 50px" />
+    </div>
     <div class="mps-footer-row beian-row">
-      <div class="beian-inline">
+      <div class="mps-footer-inline">
         <a
           href="https://beian.miit.gov.cn/"
           target="_blank"
@@ -9,7 +12,7 @@
           >闽ICP备2020022020号-2</a
         >
       </div>
-      <div class="beian-inline">
+      <div class="mps-footer-inline">
         <img
           src="@/assets/img/beian.png"
           style="width: 22.5px; vertical-align: middle; margin-right: 5px"
@@ -25,47 +28,24 @@
       </div>
     </div>
     <div class="mps-footer-row">
+      <div class="mps-footer-inline">
+        Build.Frontend Ver.{{ FE_VERSION }}
+        {{ FE_UPDATE }}
+      </div>
+      <div class="mps-footer-inline">
+        Build.Backend Ver.{{ BE_VERSION }}
+        {{ BE_UPDATE }}
+      </div>
+    </div>
+    <div class="mps-footer-row">
       Copyright © 2020-2024 MP Studio, All Rights Reserved.
-      <el-link class="handle-el-link" @click="dialogVisible = true"
-        >[README]</el-link
-      >
     </div>
   </footer>
-  <el-dialog v-model="dialogVisible" title="About" width="80%" append-to-body>
-    <div class="mps-about">
-      <div class="mps-about-head">
-        <img src="@/assets/img/logo.svg" />
-        <div>Mark Polo Space Powered by MPSTO.</div>
-      </div>
-      <div class="mps-about-lib">
-        <div>
-          <img src="@/assets/img/vue-logo.svg" />
-          <div>Vue - The MIT License</div>
-        </div>
-        <div>
-          <img src="@/assets/img/element-plus-logo.svg" />Element Plus - The MIT
-          License
-        </div>
-      </div>
-      <div class="mps-about-version">
-        <div>
-          Build.Frontend Ver.{{ FE_VERSION }}
-          {{ FE_UPDATE }}
-        </div>
-        <div>
-          Build.Backend Ver.{{ BE_VERSION }}
-          {{ BE_UPDATE }}
-        </div>
-        <div>Copyright © 2020-2024 MP Studio, All Rights Reserved.</div>
-      </div>
-    </div>
-  </el-dialog>
 </template>
 <script setup lang="ts">
 import { API } from "@/api";
-import packageJson from "../../../package.json";
+import packageJson from "@/../package.json";
 import { onMounted, ref } from "vue";
-const dialogVisible = ref(false);
 const FE_UPDATE = import.meta.env.VITE_FE_UPDATE;
 const FE_VERSION = packageJson.version;
 const BE_UPDATE = ref("-");
@@ -87,52 +67,25 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 20px 20px 0 0;
   padding: 10px 0 10px 0;
   background-color: $bg-color-2;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   .mps-footer-row {
     width: 100%;
+    margin: 5px 0 0 0;
     text-align: center;
-    margin: 10px 0 0 0;
-    &.beian-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    @media screen and (max-width: $mobile-width) {
+      font-size: 12px;
     }
-    .beian-inline {
+    .mps-footer-inline {
       margin: 0 10px 0 10px;
     }
-  }
-}
-.mps-about {
-  text-align: center;
-  .mps-about-head {
-    padding: 20px 0 20px 0;
-    font-size: 30px;
-    font-weight: bold;
-    img {
-      height: 50px;
-    }
-  }
-  .mps-about-lib {
-    padding: 20px 0 20px 0;
-    > div {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      img {
-        height: 25px;
-        margin-right: 5px;
-      }
-    }
-  }
-  .mps-about-version {
-    padding: 20px 0 20px 0;
   }
 }
 </style>

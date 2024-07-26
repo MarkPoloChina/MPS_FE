@@ -82,19 +82,15 @@ onMounted(() => {});
           margin: 20px 0 20px 0;
           font-size: 100px;
           font-weight: 600;
+          @media screen and (max-width: $mobile-width) {
+            font-size: 50px;
+          }
         }
 
         &.mps-title-design {
           font-size: 40px;
           font-weight: 300;
-        }
-
-        @media screen and (max-width: $mobile-width) {
-          &.mps-title-mp {
-            font-size: 50px;
-          }
-
-          &.mps-title-design {
+          @media screen and (max-width: $mobile-width) {
             font-size: 20px;
           }
         }

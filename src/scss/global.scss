@@ -30,6 +30,10 @@ $large-desktop-width: 1200px;
   font-family: "Raleway";
   src: url("@/assets/fonts/Raleway-VariableFont_wght.ttf");
 }
+@font-face {
+  font-family: "MesloLGS NF";
+  src: url("@/assets/fonts/MesloLGS NF Regular.ttf");
+}
 .handle-default-a {
   text-decoration: none;
   color: inherit;
@@ -79,5 +83,109 @@ $large-desktop-width: 1200px;
     }
   }
 }
-
-
+.md-container {
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    padding-bottom: 20px;
+    margin: 0 auto;
+    color: #333;
+    line-height: 1.6;
+    blockquote {
+      border-left: 4px solid #dfe2e5;
+      padding: 0 15px;
+      margin: 0;
+      color: #6a737d;
+    }
+    pre {
+      background: #1e1e1e !important;
+    }
+    code {
+      font-family: "MesloLGS NF";
+    }
+    :not(.hljs) code {
+      background-color: #00000018;
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+    table {
+      width: auto !important;
+      max-width: 100% !important;
+    }
+    // h1,
+    // h2,
+    // h3,
+    // h4,
+    // h5,
+    // h6 {
+    //   margin: -50px 0 10px;
+    //   padding: 65px 0 10px;
+    // }
+  }
+  pre.hljs {
+    padding: 18px 2px 12px 10px !important;
+    border-radius: 5px !important;
+    position: relative;
+    font-size: 14px !important;
+    line-height: 22px !important;
+    overflow: hidden !important;
+    code {
+      display: block !important;
+      margin: 0 10px !important;
+      overflow-x: auto !important;
+      &::-webkit-scrollbar {
+        z-index: 11;
+        width: 6px;
+      }
+      &::-webkit-scrollbar:horizontal {
+        height: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        width: 6px;
+        background: #666;
+      }
+      &::-webkit-scrollbar-corner,
+      &::-webkit-scrollbar-track {
+        background: #1e1e1e;
+      }
+      &::-webkit-scrollbar-track-piece {
+        background: #1e1e1e;
+        width: 6px;
+      }
+    }
+    .line-numbers-rows {
+      position: absolute;
+      pointer-events: none;
+      top: 12px;
+      bottom: 12px;
+      left: 0;
+      font-size: 100%;
+      width: 40px;
+      text-align: center;
+      letter-spacing: -1px;
+      border-right: 1px solid rgba(0, 0, 0, 0.66);
+      user-select: none;
+      counter-reset: linenumber;
+      span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+        &:before {
+          content: counter(linenumber);
+          color: #999;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+    b.name {
+      position: absolute;
+      top: 2px;
+      right: 50px;
+      z-index: 10;
+      color: #999;
+      pointer-events: none;
+    }
+  }
+}

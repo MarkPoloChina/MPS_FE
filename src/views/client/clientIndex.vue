@@ -20,9 +20,9 @@ import ClientFooter from "@/components/client/clientFooter.vue";
   background-size: cover;
   background-image: url("@/assets/img/90773916_p1.jpg");
   .mps-view-client {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background-color: $bg-color-1;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.6);
     .mps-view-client-main {
       position: relative;
       padding-top: 30px;

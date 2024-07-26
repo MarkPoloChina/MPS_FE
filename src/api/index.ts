@@ -1,5 +1,7 @@
+import { BlogDto } from "@/ts/interface/blogDto";
 import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
 import { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
+import { TagDto } from "@/ts/interface/tagDto";
 import axios from "axios";
 
 const ax = axios.create({ baseURL: import.meta.env.VITE_BASE_API });
@@ -37,6 +39,36 @@ export class API {
 
   static getRemoteBase = async (name: string): Promise<RemoteBaseDto> => {
     const resp = await ax.get(`/illust-today/remote-base/${name}`);
+    return resp.data;
+  };
+
+  static getLatestBlogs = async (): Promise<BlogDto[]> => {
+    const resp = await ax.get("/blog/latest");
+    return resp.data;
+  };
+
+  static getTags = async (): Promise<TagDto[]> => {
+    const resp = await ax.get("/blog/tags");
+    return resp.data;
+  };
+
+  static getBlogUnderTag = async (tagId: number): Promise<BlogDto[]> => {
+    const resp = await ax.get(`/blog/under_tag/${tagId}`);
+    return resp.data;
+  };
+
+  static getBlogById = async (blogId: number): Promise<BlogDto> => {
+    const resp = await ax.get(`/blog/${blogId}`);
+    return resp.data;
+  };
+
+  static getMd = async (url: string): Promise<string> => {
+    const resp = await axios.get(url);
+    return resp.data;
+  };
+
+  static getTag = async (tagId: number): Promise<TagDto> => {
+    const resp = await ax.get(`/blog/tag/${tagId}`);
     return resp.data;
   };
 }
