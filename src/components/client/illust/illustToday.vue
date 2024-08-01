@@ -253,7 +253,7 @@ watch(currentDate, (val) => {
       flex: auto;
       font-family: "Raleway";
       text-align: center;
-      font-size: 35px;
+      font-size: 2.5rem;
       font-weight: 600;
       display: flex;
       justify-content: center;
@@ -263,7 +263,7 @@ watch(currentDate, (val) => {
       flex: none;
 
       span {
-        font-size: 30px;
+        font-size: 2rem;
         font-weight: 300;
       }
     }
@@ -291,7 +291,7 @@ watch(currentDate, (val) => {
 
         .mps-illust-info-line-content {
           font-family: "Raleway";
-          font-size: 20px;
+          font-size: 1.5rem;
           font-weight: 300;
           display: flex;
           flex-direction: row;

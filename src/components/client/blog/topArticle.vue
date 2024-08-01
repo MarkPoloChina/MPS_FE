@@ -103,11 +103,11 @@ const latestBlog = computed(() => {
       width: calc(100% - 20px);
     }
     .mps-top-article-title {
-      font-size: 30px;
+      font-size: 2.2rem;
       font-weight: bold;
       margin: 10px 0;
       @media screen and (max-width: $pad-width) {
-        margin: 0;
+        margin: 2px 0;
       }
       .handle-el-link {
         font-weight: bold;
@@ -120,7 +120,7 @@ const latestBlog = computed(() => {
       }
     }
     .mps-top-article-date {
-      font-size: 20px;
+      font-size: 1.3rem;
       margin: 10px 0;
       @media screen and (max-width: $pad-width) {
         margin: 2px 0;
@@ -170,21 +170,15 @@ const latestBlog = computed(() => {
       overflow: hidden;
 
       .mps-article-box-title {
-        font-size: 25px;
+        font-size: 1.6rem;
         font-weight: bold;
         margin: 10px 0;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        @media screen and (max-width: $pad-width) {
-          font-size: 22px;
-        }
       }
       .mps-article-box-date {
-        font-size: 14px;
-        @media screen and (max-width: $pad-width) {
-          font-size: 12px;
-        }
+        font-size: 1rem;
       }
     }
   }

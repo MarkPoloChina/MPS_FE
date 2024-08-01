@@ -158,10 +158,7 @@ import avatar from "@/assets/img/avatar.jpg";
         margin-top: 10px;
         font-family: "Raleway";
         font-weight: 400;
-        font-size: 30px;
-        @media screen and (max-width: $mobile-width) {
-          font-size: 25px;
-        }
+        font-size: 2.5rem;
       }
     }
     .mps-intro-main {
@@ -171,12 +168,9 @@ import avatar from "@/assets/img/avatar.jpg";
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        font-size: 20px;
+        font-size: 1.5rem;
         font-family: "Raleway";
         font-weight: 200;
-        @media screen and (max-width: $mobile-width) {
-          font-size: 18px;
-        }
         .mps-intro-icon {
           flex: none;
           margin-right: 30px;
@@ -200,10 +194,7 @@ import avatar from "@/assets/img/avatar.jpg";
           justify-content: center;
           span {
             margin: 0 10px 0 0;
-            font-size: 22px;
-            @media screen and (max-width: $mobile-width) {
-              font-size: 20px;
-            }
+            font-size: 1.8rem;
           }
         }
       }

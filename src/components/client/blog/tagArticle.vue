@@ -117,21 +117,15 @@ const tagChain = computed(() => {
       overflow: hidden;
 
       .mps-article-box-title {
-        font-size: 25px;
+        font-size: 1.6rem;
         font-weight: bold;
         margin: 10px 0;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        @media screen and (max-width: $pad-width) {
-          font-size: 22px;
-        }
       }
       .mps-article-box-date {
-        font-size: 14px;
-        @media screen and (max-width: $pad-width) {
-          font-size: 12px;
-        }
+        font-size: 1rem;
       }
     }
   }

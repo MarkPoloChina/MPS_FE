@@ -80,9 +80,6 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    @media screen and (max-width: $mobile-width) {
-      font-size: 12px;
-    }
     .mps-footer-inline {
       margin: 0 10px 0 10px;
     }

@@ -49,6 +49,15 @@ $large-desktop-width: 1200px;
     }
   }
 }
+:root {
+  font-size: 16px;
+  @media screen and (max-width: $pad-width) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: $mobile-width) {
+    font-size: 12px;
+  }
+}
 .mps-topimg {
   position: relative;
   display: flex;
@@ -60,6 +69,9 @@ $large-desktop-width: 1200px;
     flex-direction: column;
     width: 50%;
     height: 150px;
+    @media screen and (max-width: $mobile-width) {
+      width: 75%;
+    }
     .bg {
       border-radius: 15px 15px 0 0;
       height: 60%;
@@ -71,15 +83,10 @@ $large-desktop-width: 1200px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 35px;
+      font-size: 2.5rem;
       font-family: "Raleway";
       font-weight: 600;
       white-space: nowrap;
-    }
-  }
-  @media screen and (max-width: $mobile-width) {
-    .mps-topimg-text {
-      width: 75%;
     }
   }
 }
@@ -126,7 +133,6 @@ $large-desktop-width: 1200px;
     padding: 18px 2px 12px 10px !important;
     border-radius: 5px !important;
     position: relative;
-    font-size: 14px !important;
     line-height: 22px !important;
     overflow: hidden !important;
     code {

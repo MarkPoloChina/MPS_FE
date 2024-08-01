@@ -20,7 +20,7 @@ const router = useRouter();
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 50px;
+  font-size: 3rem;
   font-weight: bold;
   color: white;
   background-color: $color-stdblue-1;
@@ -29,7 +29,7 @@ const router = useRouter();
     text-align: center;
   }
   .handle-el-link {
-    font-size: 30px;
+    font-size: 2rem;
   }
 }
 </style>

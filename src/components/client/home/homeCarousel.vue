@@ -2,7 +2,7 @@
   <div class="mps-comp-index-carousel">
     <el-carousel indicator-position="outside" :interval="5000">
       <el-carousel-item
-        v-for="item in [cover1, cover2, cover3, cover4]"
+        v-for="item in [cover1, cover2, cover3]"
         :key="item"
         class="mps-comp-index-carousel-main"
       >
@@ -21,10 +21,9 @@
 </template>
 <script setup lang="ts">
 import { onMounted } from "vue";
-import cover1 from "@/assets/img/83760346_p0.jpg";
+import cover1 from "@/assets/img/1668579404073820163@amsrntk3_photo.jpg";
 import cover2 from "@/assets/img/86616238_p0.jpg";
 import cover3 from "@/assets/img/82336808_p0_d.jpg";
-import cover4 from "@/assets/img/90014887_p0.jpg";
 onMounted(() => {});
 </script>
 <style lang="scss" scoped>
@@ -71,6 +70,7 @@ onMounted(() => {});
         padding: 20px 20px 20px 20px;
         border-radius: 20px;
         margin-bottom: 30px;
+        pointer-events: initial;
       }
 
       .mps-title-text {
@@ -80,19 +80,13 @@ onMounted(() => {});
 
         &.mps-title-mp {
           margin: 20px 0 20px 0;
-          font-size: 100px;
+          font-size: 5.5rem;
           font-weight: 600;
-          @media screen and (max-width: $mobile-width) {
-            font-size: 50px;
-          }
         }
 
         &.mps-title-design {
-          font-size: 40px;
+          font-size: 2.5rem;
           font-weight: 300;
-          @media screen and (max-width: $mobile-width) {
-            font-size: 20px;
-          }
         }
       }
     }
