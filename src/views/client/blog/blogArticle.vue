@@ -104,9 +104,10 @@ async function getBlog() {
   getMd(res.target);
 }
 function getMd(target: string) {
+  const baseDir = target.split("/").slice(0, -1).join("/");
   API.getMd(import.meta.env.VITE_BASE_IHS_URL + target).then((res) => {
     content.value = md.render(
-      prependImagePrefix(res, import.meta.env.VITE_BASE_IHS_URL + "/")
+      prependImagePrefix(res, import.meta.env.VITE_BASE_IHS_URL + baseDir + "/")
     );
   });
 }
