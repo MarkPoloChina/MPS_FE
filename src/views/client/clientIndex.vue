@@ -8,10 +8,12 @@
       <client-footer></client-footer>
     </div>
   </div>
+  <Live2d />
 </template>
 <script setup lang="ts">
 import ClientHeader from "@/components/client/clientHeader.vue";
 import ClientFooter from "@/components/client/clientFooter.vue";
+import Live2d from "@/components/client/live2d.vue";
 </script>
 <style lang="scss" scoped>
 .mps-view-client-bg {

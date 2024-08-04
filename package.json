@@ -1,7 +1,7 @@
 {
   "name": "mps_fe",
   "private": true,
-  "version": "3.3.1",
+  "version": "3.3.2",
   "type": "module",
   "description": "MarkPolo Space fackend project.",
   "author": {
@@ -21,6 +21,8 @@
     "highlight.js": "^11.10.0",
     "markdown-it": "^14.1.0",
     "markdown-it-katex": "^2.0.3",
+    "pixi-live2d-display": "^0.4.0",
+    "pixi.js": "6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vuex": "^4.1.0"
