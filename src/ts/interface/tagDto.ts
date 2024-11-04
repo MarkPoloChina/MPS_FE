@@ -1,4 +1,4 @@
-import { BlogDto } from "./blogDto";
+import type { BlogDto } from "./blogDto";
 
 export interface TagDto {
   id: number;

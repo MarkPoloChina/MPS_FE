@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { API } from "@/api";
 import coverDefault from "@/assets/img/90773916_p1.jpg";
-import { BlogDto } from "@/ts/interface/blogDto";
-import { TagDto } from "@/ts/interface/tagDto";
+import type { BlogDto } from "@/ts/interface/blogDto";
+import type { TagDto } from "@/ts/interface/tagDto";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const blogs = ref<BlogDto[]>([]);
@@ -40,6 +40,7 @@ const tagChain = computed(() => {
       <el-breadcrumb-item
         :to="{ path: `/blog/tag/${tag.id}` }"
         v-for="tag in tagChain"
+        :key="tag.id"
       >
         {{ tag.name }}
       </el-breadcrumb-item>
@@ -48,6 +49,7 @@ const tagChain = computed(() => {
   <div class="mps-articles">
     <div
       v-for="blog in blogs"
+      :key="blog.id"
       class="mps-article-box"
       @click="router.push(`/blog/article/${blog.id}`)"
     >

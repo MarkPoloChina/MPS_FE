@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as PIXI from "pixi.js";
-import { Ticker, TickerPlugin } from '@pixi/ticker';
+import { Ticker, TickerPlugin } from "@pixi/ticker";
 import { InternalModel, Live2DModel } from "pixi-live2d-display/cubism4";
 import { onMounted, onUnmounted } from "vue";
 
@@ -27,7 +27,7 @@ const init = async () => {
   model.scale.set(0.08, 0.08);
   model.anchor.set(0.5, 0.5);
 
-  model.on("click", (_hitAreas) => {
+  model.on("click", () => {
     model!.motion("TapBody");
   });
 };

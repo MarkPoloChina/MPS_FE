@@ -9,6 +9,7 @@
           <el-breadcrumb-item
             :to="{ path: `/blog/tag/${tag.id}` }"
             v-for="tag in blog.tags"
+            :key="tag.id"
           >
             {{ tag.name }}
           </el-breadcrumb-item>
@@ -47,7 +48,7 @@
 </template>
 <script setup lang="ts">
 import { API } from "@/api";
-import { BlogDto } from "@/ts/interface/blogDto";
+import type { BlogDto } from "@/ts/interface/blogDto";
 import { onMounted, ref } from "vue";
 import markdownit from "markdown-it";
 import markdownitKatex from "markdown-it-katex";
@@ -92,7 +93,7 @@ const md = markdownit({
         html += '<b class="name">' + lang + "</b>";
       }
       return '<pre class="hljs"><code>' + html + "</code></pre>";
-    } catch (__) {}
+    } catch {}
     return "";
   },
 }).use(markdownitKatex);
@@ -107,7 +108,10 @@ function getMd(target: string) {
   const baseDir = target.split("/").slice(0, -1).join("/");
   API.getMd(import.meta.env.VITE_BASE_IHS_URL + target).then((res) => {
     content.value = md.render(
-      prependImagePrefix(res, import.meta.env.VITE_BASE_IHS_URL + baseDir + "/")
+      prependImagePrefix(
+        res,
+        import.meta.env.VITE_BASE_IHS_URL + baseDir + "/",
+      ),
     );
   });
 }

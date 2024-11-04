@@ -1,6 +1,6 @@
 <template>
   <header class="mps-comp-client-header">
-    <el-link class="mps-logo" @click="$router.push('/')" :underline="false">
+    <el-link class="mps-logo" @click="router.push('/')" :underline="false">
       <img class="mps-logo-svg" src="@/assets/img/logo.svg" />
       <div class="mps-logo-text">MarkPoloSpace</div>
     </el-link>

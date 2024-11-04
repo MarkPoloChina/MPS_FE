@@ -1,7 +1,7 @@
-import { BlogDto } from "@/ts/interface/blogDto";
+import type { BlogDto } from "@/ts/interface/blogDto";
 import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
-import { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
-import { TagDto } from "@/ts/interface/tagDto";
+import type { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
+import type { TagDto } from "@/ts/interface/tagDto";
 import axios from "axios";
 
 const ax = axios.create({ baseURL: import.meta.env.VITE_BASE_API });

@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { TagDto } from "@/ts/interface/tagDto";
+import type { TagDto } from "@/ts/interface/tagDto";
 import { useRouter } from "vue-router";
 const router = useRouter();
 defineProps<{

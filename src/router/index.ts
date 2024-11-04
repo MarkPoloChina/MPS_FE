@@ -4,7 +4,7 @@ import routes from "./client/index";
 const router = createRouter({
   history: createWebHistory(),
   // history: createWebHashHistory(),
-  scrollBehavior(to, from, _savedPosition) {
+  scrollBehavior(to, from) {
     if (from.name === "illustDate" && to.name === "illustDate") return;
     if (from.fullPath === to.fullPath) return;
     return { top: 0 };
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: "/:pathMatch(.*)*",
       name: "404",
-      component: () => import("@/views/404.vue"),
+      component: () => import("@/views/404Page.vue"),
     },
   ],
 });

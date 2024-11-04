@@ -14,7 +14,7 @@
           </el-icon>
           <div class="mps-intro-group">
             <div>
-              <el-link class="handle-el-link" @click="$router.push('/')"
+              <el-link class="handle-el-link" @click="router.push('/')"
                 >Index</el-link
               >, what you see now.
             </div>
@@ -26,7 +26,7 @@
           </el-icon>
           <div class="mps-intro-group">
             <div>
-              <el-link class="handle-el-link" @click="$router.push('/blog')"
+              <el-link class="handle-el-link" @click="router.push('/blog')"
                 >Blog</el-link
               >, sharing some technologic articles and daily stickies.
             </div>
@@ -38,7 +38,7 @@
           </el-icon>
           <div class="mps-intro-group">
             <div>
-              <el-link class="handle-el-link" @click="$router.push('/illust')"
+              <el-link class="handle-el-link" @click="router.push('/illust')"
                 >Illust</el-link
               >, sharing some pics.
             </div>
@@ -50,7 +50,7 @@
           </el-icon>
           <div class="mps-intro-group">
             <div>
-              <el-link class="handle-el-link" @click="$router.push('/project')"
+              <el-link class="handle-el-link" @click="router.push('/project')"
                 >Projects</el-link
               >, showing some web works.
             </div>
@@ -125,6 +125,8 @@ import {
   ChatDotRound,
 } from "@element-plus/icons-vue";
 import avatar from "@/assets/img/avatar.jpg";
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
 <style lang="scss" scoped>
 .mps-comp-index-intro {

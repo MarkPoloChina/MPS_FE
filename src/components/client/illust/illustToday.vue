@@ -104,10 +104,10 @@ import {
 } from "@element-plus/icons-vue";
 import { API } from "@/api";
 import { ElMessage } from "element-plus";
-import { IllustTodayObj } from "@/ts/interface/illustTodayObj";
-import { IllustTodayDto } from "@/ts/interface/illustTodayDto";
+import type { IllustTodayObj } from "@/ts/interface/illustTodayObj";
+import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
 import { useRoute, useRouter } from "vue-router";
-import { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
+import type { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
 const downloadLink = ref<HTMLAnchorElement>();
 const currentIT = ref<IllustTodayObj>();
 const isImageLoading = ref(true);
@@ -188,7 +188,7 @@ watch(
   },
   {
     immediate: true,
-  }
+  },
 );
 watch(currentDate, (val) => {
   if (val) router.push(`/illust/${val}`);

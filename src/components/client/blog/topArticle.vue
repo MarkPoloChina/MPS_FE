@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { API } from "@/api";
 import coverDefault from "@/assets/img/90773916_p1.jpg";
-import { BlogDto } from "@/ts/interface/blogDto";
+import type { BlogDto } from "@/ts/interface/blogDto";
 import { getAListFileUrl } from "@/ts/util/path";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
@@ -21,7 +21,9 @@ const latestBlog = computed(() => {
 <template>
   <div
     class="mps-top-article"
-    :style="{ backgroundImage: `url(${getAListFileUrl(latestBlog.imgTarget) ?? coverDefault})` }"
+    :style="{
+      backgroundImage: `url(${getAListFileUrl(latestBlog.imgTarget) ?? coverDefault})`,
+    }"
     v-if="latestBlog"
   >
     <div class="mps-top-article-text">
@@ -50,6 +52,7 @@ const latestBlog = computed(() => {
   <div class="mps-articles">
     <div
       v-for="blog in latestBlogs.slice(1)"
+      :key="blog.id"
       class="mps-article-box"
       @click="router.push(`/blog/article/${blog.id}`)"
     >
