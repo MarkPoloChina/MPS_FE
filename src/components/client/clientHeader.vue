@@ -70,6 +70,7 @@ const router = useRouter();
       font-size: 30px;
       font-family: "Raleway";
       font-weight: 600;
+      -webkit-font-smoothing: antialiased;
       @media screen and (max-width: $mobile-width) {
         display: none;
       }

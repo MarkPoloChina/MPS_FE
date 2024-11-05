@@ -163,6 +163,7 @@ onMounted(() => {
   }
   .mps-title {
     font-weight: bold;
+    font-size: 1.5rem;
   }
 }
 </style>

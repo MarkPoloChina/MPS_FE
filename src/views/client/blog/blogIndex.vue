@@ -55,9 +55,18 @@ async function getTags() {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 20px 50px;
+  padding: 20px 250px;
+  @media screen and (max-width: $large-desktop-width) {
+    padding: 20px 100px;
+  }
+  @media screen and (max-width: $desktop-width) {
+    padding: 20px 50px;
+  }
+  @media screen and (max-width: $pad-width) {
+    padding: 20px 20px;
+  }
   @media screen and (max-width: $mobile-width) {
-    padding: 20px 0;
+    padding: 20px 10px;
   }
   .center-side {
     width: 100%;

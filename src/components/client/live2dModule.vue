@@ -11,10 +11,14 @@ const init = async () => {
   PIXI.extensions.add(TickerPlugin);
   Live2DModel.registerTicker(Ticker);
 
+  const ratio = window.devicePixelRatio || 1;
+  document.getElementById("canvas")!.style.width = "150px";
+  document.getElementById("canvas")!.style.height = "360px";
+
   app = new PIXI.Application({
     view: document.getElementById("canvas") as HTMLCanvasElement,
-    width: 150,
-    height: 360,
+    width: 150 * ratio,
+    height: 360 * ratio,
     backgroundAlpha: 0,
   });
 
@@ -22,9 +26,9 @@ const init = async () => {
 
   app.stage.addChild(model);
 
-  model.x = 75;
-  model.y = 184;
-  model.scale.set(0.08, 0.08);
+  model.x = 75 * ratio;
+  model.y = 184 * ratio;
+  model.scale.set(0.08 * ratio, 0.08 * ratio);
   model.anchor.set(0.5, 0.5);
 
   model.on("click", () => {

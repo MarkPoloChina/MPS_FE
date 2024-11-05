@@ -3,6 +3,7 @@ import { API } from "@/api";
 import coverDefault from "@/assets/img/90773916_p1.jpg";
 import type { BlogDto } from "@/ts/interface/blogDto";
 import type { TagDto } from "@/ts/interface/tagDto";
+import { getAListFileUrl } from "@/ts/util/path";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 const blogs = ref<BlogDto[]>([]);
@@ -54,7 +55,7 @@ const tagChain = computed(() => {
       @click="router.push(`/blog/article/${blog.id}`)"
     >
       <el-image
-        :src="coverDefault"
+        :src="getAListFileUrl(blog.imgTarget) ?? coverDefault"
         fit="cover"
         class="mps-article-box-img"
       ></el-image>
