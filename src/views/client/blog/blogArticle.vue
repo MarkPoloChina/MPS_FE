@@ -1,51 +1,3 @@
-<template>
-  <div class="page-head" v-if="blog">
-    <el-page-header @back="router.back()">
-      <template #breadcrumb>
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: `/blog` }">
-            首页
-          </el-breadcrumb-item>
-          <el-breadcrumb-item
-            :to="{ path: `/blog/tag/${tag.id}` }"
-            v-for="tag in blog.tags"
-            :key="tag.id"
-          >
-            {{ tag.name }}
-          </el-breadcrumb-item>
-        </el-breadcrumb>
-      </template>
-      <template #content>
-        <div class="mps-title">
-          <span> {{ blog.title }} </span>
-        </div>
-      </template>
-      <template #extra>
-        <el-tag
-          v-for="tag in blog.tags"
-          :key="tag.id"
-          style="margin: 5px"
-          size="large"
-        >
-          {{ tag.name }}
-        </el-tag>
-      </template>
-
-      <el-descriptions :column="1" size="large">
-        <el-descriptions-item label="发布于">
-          {{ new Date(blog.fileDate).toLocaleString() }}
-        </el-descriptions-item>
-      </el-descriptions>
-      <el-image
-        :src="getAListFileUrl(blog.imgTarget) ?? coverDefault"
-        fit="contain"
-      ></el-image>
-    </el-page-header>
-  </div>
-  <div class="md-container" v-if="content">
-    <div class="markdown-body" v-html="content"></div>
-  </div>
-</template>
 <script setup lang="ts">
 import { API } from "@/api";
 import type { BlogDto } from "@/ts/interface/blogDto";
@@ -54,7 +6,6 @@ import markdownit from "markdown-it";
 import markdownitKatex from "markdown-it-katex";
 import hljs from "highlight.js";
 import { useRoute, useRouter } from "vue-router";
-import coverDefault from "@/assets/img/90773916_p1.jpg";
 import { getAListFileUrl } from "@/ts/util/path";
 
 const route = useRoute();
@@ -135,6 +86,55 @@ onMounted(() => {
   getBlog();
 });
 </script>
+<template>
+  <div class="page-head" v-if="blog">
+    <el-page-header @back="router.back()">
+      <template #breadcrumb>
+        <el-breadcrumb separator=">">
+          <el-breadcrumb-item :to="{ path: `/blog` }">
+            首页
+          </el-breadcrumb-item>
+          <el-breadcrumb-item
+            :to="{ path: `/blog/tag/${tag.id}` }"
+            v-for="tag in blog.tags"
+            :key="tag.id"
+          >
+            {{ tag.name }}
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </template>
+      <template #content>
+        <div class="mps-title">
+          <span> {{ blog.title }} </span>
+        </div>
+      </template>
+      <template #extra>
+        <el-tag
+          v-for="tag in blog.tags"
+          :key="tag.id"
+          style="margin: 5px"
+          size="large"
+        >
+          {{ tag.name }}
+        </el-tag>
+      </template>
+
+      <el-descriptions :column="1" size="large">
+        <el-descriptions-item label="发布于">
+          {{ new Date(blog.fileDate).toLocaleString() }}
+        </el-descriptions-item>
+      </el-descriptions>
+      <el-image
+        v-if="blog.imgTarget"
+        :src="getAListFileUrl(blog.imgTarget)!"
+        fit="contain"
+      ></el-image>
+    </el-page-header>
+  </div>
+  <div class="md-container" v-if="content">
+    <div class="markdown-body" v-html="content"></div>
+  </div>
+</template>
 <style lang="scss" scoped>
 .md-container {
   background-color: rgba(255, 255, 255, 0.8);

@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+</script>
 <template>
   <div>
     <div class="mps-topimg">
@@ -6,12 +11,9 @@
         <div class="tx">Illust</div>
       </div>
     </div>
-    <illust-today></illust-today>
+    <RouterView :key="router.currentRoute.value.fullPath" />
   </div>
 </template>
-<script setup lang="ts">
-import IllustToday from "@/components/client/illust/illustToday.vue";
-</script>
 <style lang="scss" scoped>
 .bg {
   background-position: 50% 55%;

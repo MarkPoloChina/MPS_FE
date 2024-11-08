@@ -1,3 +1,108 @@
+<script setup lang="ts">
+import { onMounted, ref, watch } from "vue";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Download,
+} from "@element-plus/icons-vue";
+import { API } from "@/api";
+import { ElMessage } from "element-plus";
+import type { IllustTodayObj } from "@/ts/interface/illustTodayObj";
+import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
+import { useRoute, useRouter } from "vue-router";
+import type { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
+const downloadLink = ref<HTMLAnchorElement>();
+const currentIT = ref<IllustTodayObj>();
+const isImageLoading = ref(true);
+const route = useRoute();
+const router = useRouter();
+const currentDate = ref("");
+onMounted(() => {});
+
+const getIllustTodayFor = async (date: string) => {
+  try {
+    const obj = await API.getIllustToday(date);
+    const rb = await API.getRemoteBase(obj.type);
+    currentIT.value = parseObj(obj, rb);
+  } catch {
+    router
+      .replace({
+        name: "illustToday",
+        params: { date: "latest" },
+      })
+      .then(() => {
+        ElMessage.error("date格式错误或不存在");
+      });
+  }
+};
+const initIllust = () => {
+  if (route.params.date === "latest") getIllustTodayLatest();
+  else getIllustTodayFor(route.params.date as string);
+};
+const getIllustTodayLatest = async () => {
+  const obj = await API.getIllustTodayLatest();
+  const rb = await API.getRemoteBase(obj.type);
+  currentIT.value = parseObj(obj, rb);
+};
+const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
+  if (!currentIT.value || currentIT.value.date !== dto.date)
+    isImageLoading.value = true;
+  const obj: IllustTodayObj = {
+    url: rbdto.target.startsWith("/")
+      ? `https://alist.markpolo.cn/d${rbdto.target}/${dto.target}`
+      : `${rbdto.target}/${dto.target}.jpg`,
+    tags: dto.tags ? dto.tags.split(",") : [],
+    date: dto.date,
+    type: dto.type,
+    char: dto.char,
+    source: dto.source,
+  };
+  return obj;
+};
+const handleGetNext = async () => {
+  try {
+    const obj = await API.getIllustTodayNext(currentIT.value!.date);
+    if (!obj) {
+      ElMessage.error("没有后一张");
+      return;
+    }
+    router.push({ name: "illustToday", params: { date: obj.date } });
+  } catch {
+    ElMessage.error("网络错误");
+  }
+};
+const handleGetPre = async () => {
+  try {
+    const obj = await API.getIllustTodayPre(currentIT.value!.date);
+    if (!obj) {
+      ElMessage.error("没有前一张");
+      return;
+    }
+    router.push({ name: "illustToday", params: { date: obj.date } });
+  } catch {
+    ElMessage.error("网络错误");
+  }
+};
+const handleDownload = (url: string) => {
+  if (url) {
+    downloadLink.value?.setAttribute("href", url);
+    downloadLink.value?.click();
+  }
+};
+watch(
+  () => route.params.date,
+  () => {
+    if (route.path.startsWith("/illust")) initIllust();
+  },
+  {
+    immediate: true,
+  },
+);
+watch(currentDate, (val) => {
+  if (val) router.push({ name: "illustToday", params: { date: val } });
+});
+</script>
 <template>
   <div class="mps-illust-pictd" v-if="currentIT">
     <a ref="downloadLink" style="display: none"></a>
@@ -94,106 +199,6 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  Download,
-} from "@element-plus/icons-vue";
-import { API } from "@/api";
-import { ElMessage } from "element-plus";
-import type { IllustTodayObj } from "@/ts/interface/illustTodayObj";
-import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
-import { useRoute, useRouter } from "vue-router";
-import type { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
-const downloadLink = ref<HTMLAnchorElement>();
-const currentIT = ref<IllustTodayObj>();
-const isImageLoading = ref(true);
-const route = useRoute();
-const router = useRouter();
-const currentDate = ref("");
-onMounted(() => {});
-
-const getIllustTodayFor = async (date: string) => {
-  try {
-    const obj = await API.getIllustToday(date);
-    const rb = await API.getRemoteBase(obj.type);
-    currentIT.value = parseObj(obj, rb);
-  } catch {
-    router.replace("/illust/latest").then(() => {
-      ElMessage.error("date格式错误或不存在");
-    });
-  }
-};
-const initIllust = () => {
-  if (route.params.date === "latest") getIllustTodayLatest();
-  else getIllustTodayFor(route.params.date as string);
-};
-const getIllustTodayLatest = async () => {
-  const obj = await API.getIllustTodayLatest();
-  const rb = await API.getRemoteBase(obj.type);
-  currentIT.value = parseObj(obj, rb);
-};
-const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
-  if (!currentIT.value || currentIT.value.date !== dto.date)
-    isImageLoading.value = true;
-  const obj: IllustTodayObj = {
-    url: rbdto.target.startsWith("/")
-      ? `https://alist.markpolo.cn/d${rbdto.target}/${dto.target}`
-      : `${rbdto.target}/${dto.target}.jpg`,
-    tags: dto.tags ? dto.tags.split(",") : [],
-    date: dto.date,
-    type: dto.type,
-    char: dto.char,
-    source: dto.source,
-  };
-  return obj;
-};
-const handleGetNext = async () => {
-  try {
-    const obj = await API.getIllustTodayNext(currentIT.value!.date);
-    if (!obj) {
-      ElMessage.error("没有后一张");
-      return;
-    }
-    router.push(`/illust/${obj.date}`);
-  } catch {
-    ElMessage.error("网络错误");
-  }
-};
-const handleGetPre = async () => {
-  try {
-    const obj = await API.getIllustTodayPre(currentIT.value!.date);
-    if (!obj) {
-      ElMessage.error("没有前一张");
-      return;
-    }
-    router.push(`/illust/${obj.date}`);
-  } catch {
-    ElMessage.error("网络错误");
-  }
-};
-const handleDownload = (url: string) => {
-  if (url) {
-    downloadLink.value?.setAttribute("href", url);
-    downloadLink.value?.click();
-  }
-};
-watch(
-  () => route.params.date,
-  () => {
-    if (route.path.startsWith("/illust")) initIllust();
-  },
-  {
-    immediate: true,
-  },
-);
-watch(currentDate, (val) => {
-  if (val) router.push(`/illust/${val}`);
-});
-</script>
 <style lang="scss" scoped>
 .mps-illust-pictd {
   position: relative;

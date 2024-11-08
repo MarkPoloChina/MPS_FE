@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import appImg from "@/assets/img/icxor/app.png";
+import appIcon from "@/assets/img/icxor/icon.png";
+</script>
 <template>
   <div class="mps-project-icxor">
     <div class="info">
@@ -28,10 +32,6 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import appImg from "@/assets/img/icxor/app.png";
-import appIcon from "@/assets/img/icxor/icon.png";
-</script>
 <style lang="scss" scoped>
 .mps-project-icxor {
   background-color: rgba(46, 136, 192, 0.9);

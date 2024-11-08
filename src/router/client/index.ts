@@ -36,16 +36,23 @@ const routes = [
       {
         path: "illust",
         name: "illust",
-        redirect: {
-          name: "illustDate",
-          params: { date: "latest" },
-        },
-      },
-      {
-        path: "illust/:date",
-        name: "illustDate",
         meta: { title: "插画" },
         component: () => import("@/views/client/illust/illustIndex.vue"),
+        children: [
+          {
+            path: "",
+            name: "todayLatest",
+            redirect: {
+              name: "illustToday",
+              params: { date: "latest" },
+            },
+          },
+          {
+            path: "today/:date",
+            name: "illustToday",
+            component: () => import("@/views/client/illust/illustToday.vue"),
+          },
+        ],
       },
       {
         path: "project",

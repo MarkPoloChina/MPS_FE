@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import ProjectIcxor from "@/components/client/project/projectIcxor.vue";
+</script>
 <template>
   <div>
     <div class="mps-topimg">
@@ -11,9 +14,6 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import ProjectIcxor from "@/components/client/project/projectIcxor.vue";
-</script>
 <style lang="scss" scoped>
 .bg {
   background-position: 50% 40%;
