@@ -116,7 +116,7 @@ onMounted(() => {});
             <map-location></map-location>
           </el-icon>
           <div class="mps-intro-group">
-            <div>SI of XMU, Xiamen, China P.R. .</div>
+            <div>SI of XMU, Xiamen, China P.R.</div>
           </div>
         </div>
         <div class="mps-intro-main-row">

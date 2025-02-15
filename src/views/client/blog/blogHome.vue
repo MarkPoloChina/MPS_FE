@@ -27,13 +27,12 @@ const latestBlog = computed(() => {
     }"
     v-if="latestBlog"
   >
-    <div class="mps-top-article-text">
+    <div
+      class="mps-top-article-text"
+      @click="router.push(`/blog/article/${latestBlog.id}`)"
+    >
       <div class="mps-top-article-title">
-        <el-link
-          class="handle-el-link"
-          @click="router.push(`/blog/article/${latestBlog.id}`)"
-          >{{ latestBlog.title }}</el-link
-        >
+        <div class="title">{{ latestBlog.title }}</div>
       </div>
       <div class="mps-top-article-btm">
         <div class="mps-top-article-date">
@@ -51,6 +50,16 @@ const latestBlog = computed(() => {
         </div>
       </div>
     </div>
+  </div>
+  <div v-else class="mps-top-article">
+    <el-skeleton animated style="height: 100%">
+      <template #template>
+        <el-skeleton-item
+          variant="rect"
+          style="height: 100%; border-radius: 20px"
+        />
+      </template>
+    </el-skeleton>
   </div>
   <ArticleList :blogs="latestBlogs.slice(1)" />
 </template>
@@ -77,6 +86,10 @@ const latestBlog = computed(() => {
     justify-content: space-around;
     color: white;
     background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
     @media screen and (max-width: $pad-width) {
       height: auto;
       padding: 10px;
@@ -89,14 +102,11 @@ const latestBlog = computed(() => {
       @media screen and (max-width: $pad-width) {
         margin: 2px 0;
       }
-      .handle-el-link {
+      .title {
         font-weight: bold;
-        &:hover {
-          color: white;
-          &:after {
-            border-bottom: 1px solid white;
-          }
-        }
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
     .mps-top-article-btm {

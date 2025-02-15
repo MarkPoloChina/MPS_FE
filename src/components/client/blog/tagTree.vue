@@ -16,6 +16,7 @@ const router = useRouter();
           router.push(`/blog/tag/${tag.id}`);
           $emit('menuClick');
         "
+        class="link-ellipsis"
         ><span>{{ tag.name }}</span></el-link
       >
     </template>
@@ -37,3 +38,14 @@ const router = useRouter();
     <template #title>{{ tag.name }}</template>
   </el-menu-item>
 </template>
+<style lang="scss" scoped>
+.link-ellipsis {
+  overflow: hidden;
+  :deep(.el-link__inner) {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+</style>

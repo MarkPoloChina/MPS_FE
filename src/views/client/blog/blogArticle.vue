@@ -57,11 +57,11 @@ async function getBlog() {
 }
 function getMd(target: string) {
   const baseDir = target.split("/").slice(0, -1).join("/");
-  API.getMd(import.meta.env.VITE_BASE_IHS_URL + target).then((res) => {
+  API.getMd(import.meta.env.VITE_BASE_BLOGS_URL + target).then((res) => {
     content.value = md.render(
       prependImagePrefix(
         res,
-        import.meta.env.VITE_BASE_IHS_URL + baseDir + "/",
+        import.meta.env.VITE_BASE_BLOGS_URL + baseDir + "/",
       ),
     );
   });
@@ -133,6 +133,7 @@ onMounted(() => {
   </div>
   <div class="md-container" v-if="content">
     <div class="markdown-body" v-html="content"></div>
+    <div class="mps-article-renderend">END OF PAGE</div>
   </div>
 </template>
 <style lang="scss" scoped>

@@ -50,7 +50,7 @@ const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
     isImageLoading.value = true;
   const obj: IllustTodayObj = {
     url: rbdto.target.startsWith("/")
-      ? `https://alist.markpolo.cn/d${rbdto.target}/${dto.target}`
+      ? `${import.meta.env.VITE_BASE_IT_URL}${rbdto.target}/${dto.target}`
       : `${rbdto.target}/${dto.target}.jpg`,
     tags: dto.tags ? dto.tags.split(",") : [],
     date: dto.date,

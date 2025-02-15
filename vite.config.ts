@@ -29,7 +29,7 @@ export default defineConfig({
               rewrite: (path) => path.replace(/^\/api/, ""),
             }
           : {
-              target: "https://mps.markpolo.cn/",
+              target: "https://www.markpolo.cn/",
               changeOrigin: true,
               secure: true,
             },

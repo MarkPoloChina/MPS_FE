@@ -3,11 +3,14 @@ import coverDefault from "@/assets/img/53061497_p0.jpg";
 import { getAListFileUrl } from "@/ts/util/path";
 import { useRouter } from "vue-router";
 import type { BlogDto } from "@/ts/interface/blogDto";
+import { ref } from "vue";
 
 defineProps({
   blogs: Array<BlogDto>,
 });
 const router = useRouter();
+const renderEnd = ref(true);
+
 </script>
 <template>
   <div class="mps-articles">
@@ -36,6 +39,27 @@ const router = useRouter();
           发布于{{ new Date(blog.fileDate).toLocaleString() }}
         </div>
       </div>
+    </div>
+    <div class="mps-article-renderend" v-if="renderEnd">END OF PAGE</div>
+    <div v-if="blogs?.length === 0">
+      <el-skeleton
+        class="mps-article-box"
+        style="cursor: default"
+        animated
+        v-for="i in 5"
+        :key="i"
+      >
+        <template #template>
+          <el-skeleton-item variant="image" class="mps-article-box-img" />
+          <div class="mps-article-box-info">
+            <el-skeleton-item variant="p" class="mps-article-box-title" />
+            <div>
+              <el-skeleton-item variant="text" style="width: 50px" />
+            </div>
+            <el-skeleton-item variant="p" class="mps-article-box-date" />
+          </div>
+        </template>
+      </el-skeleton>
     </div>
   </div>
 </template>

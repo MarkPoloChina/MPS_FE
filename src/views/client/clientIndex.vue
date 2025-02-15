@@ -99,7 +99,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="mps-footer-row">
-        Copyright © 2020-2024 MP Studio, All Rights Reserved.
+        Copyright © 2020-2025 MP Studio, All Rights Reserved.
       </div>
     </footer>
   </div>
