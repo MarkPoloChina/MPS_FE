@@ -173,6 +173,7 @@ onMounted(() => {
     background-color: $bg-color-2;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    color: $text-gary-color-2;
     .mps-footer-row {
       width: 100%;
       margin: 5px 0 0 0;

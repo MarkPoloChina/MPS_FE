@@ -5,6 +5,7 @@ import {
   ArrowRight,
   Calendar,
   Download,
+  Sunrise,
 } from "@element-plus/icons-vue";
 import { API } from "@/api";
 import { ElMessage } from "element-plus";
@@ -42,8 +43,7 @@ const initIllust = () => {
 };
 const getIllustTodayLatest = async () => {
   const obj = await API.getIllustTodayLatest();
-  const rb = await API.getRemoteBase(obj.type);
-  currentIT.value = parseObj(obj, rb);
+  router.replace({ name: "illustToday", params: { date: obj.date } });
 };
 const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
   if (!currentIT.value || currentIT.value.date !== dto.date)
@@ -83,6 +83,9 @@ const handleGetPre = async () => {
   } catch {
     ElMessage.error("网络错误");
   }
+};
+const handleGetLatest = async () => {
+  router.push({ name: "illustToday", params: { date: "latest" } });
 };
 const handleDownload = (url: string) => {
   if (url) {
@@ -154,6 +157,14 @@ watch(currentDate, (val) => {
       <div class="mps-illust-pictd-func">
         <div>
           <el-button
+            :icon="Sunrise"
+            circle
+            @click="handleGetLatest"
+            size="large"
+          />
+        </div>
+        <div>
+          <el-button
             :icon="ArrowLeft"
             circle
             @click="handleGetPre"
@@ -215,8 +226,8 @@ watch(currentDate, (val) => {
     position: relative;
     display: flex;
     height: calc(100vh - 200px);
+    flex-direction: column-reverse;
     @media screen and (max-width: $mobile-width) {
-      flex-direction: column-reverse;
       height: auto;
     }
 
@@ -225,15 +236,15 @@ watch(currentDate, (val) => {
     }
 
     .mps-illust-pictd-func {
-      padding: 0 20px 0 50px;
+      padding: 0;
       flex: none;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
+      margin: 20px 0;
       @media screen and (max-width: $mobile-width) {
-        padding: 0;
-        flex-direction: row;
+        margin: 0;
       }
 
       div {
