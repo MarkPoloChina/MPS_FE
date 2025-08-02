@@ -27,6 +27,13 @@ export class API {
     return resp.data;
   };
 
+  static getIllustTodayValid = async (offset: number, limit: number): Promise<string[]> => {
+    const resp = await ax.get(`/illust-today/valid`, {
+      params: { offset, limit },
+    });
+    return resp.data;
+  };
+
   static getIllustTodayPre = async (date: string): Promise<IllustTodayDto> => {
     const resp = await ax.get(`/illust-today/pre/${date}`);
     return resp.data;
@@ -42,8 +49,10 @@ export class API {
     return resp.data;
   };
 
-  static getLatestBlogs = async (): Promise<BlogDto[]> => {
-    const resp = await ax.get("/blog/latest");
+  static getLatestBlogs = async (pageSize: number, offset: number): Promise<BlogDto[]> => {
+    const resp = await ax.get("/blog/latest", {
+      params: { pageSize, offset },
+    });
     return resp.data;
   };
 
@@ -52,8 +61,10 @@ export class API {
     return resp.data;
   };
 
-  static getBlogUnderTag = async (tagId: number): Promise<BlogDto[]> => {
-    const resp = await ax.get(`/blog/under_tag/${tagId}`);
+  static getBlogUnderTag = async (tagId: number, pageSize: number, offset: number): Promise<BlogDto[]> => {
+    const resp = await ax.get(`/blog/under_tag/${tagId}`, {
+      params: { pageSize, offset },
+    });
     return resp.data;
   };
 

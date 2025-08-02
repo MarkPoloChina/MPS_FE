@@ -5,18 +5,45 @@ import type { TagDto } from "@/ts/interface/tagDto";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import ArticleList from "@/components/client/blog/articleList.vue";
+import { autoLoad } from "@/ts/util";
 
 const blogs = ref<BlogDto[]>([]);
 const currentTag = ref<TagDto>();
 const route = useRoute();
+const renderSize = 20;
+const renderPage = ref(0);
+const renderEnd = ref(false);
 onMounted(() => {
+  autoLoad(loadMore);
   getTag();
   getBlogsUnderTag();
 });
 async function getBlogsUnderTag() {
+  renderPage.value = 0;
+  renderEnd.value = false;
   const tagId = route.params.id;
-  const res = await API.getBlogUnderTag(parseInt(tagId as string));
+  const res = await API.getBlogUnderTag(
+    parseInt(tagId as string),
+    renderSize,
+    renderPage.value * renderSize,
+  );
   blogs.value = res;
+  if (res.length) renderPage.value++;
+  else renderEnd.value = true;
+}
+async function loadMore() {
+  if (renderEnd.value) return;
+
+  const tagId = route.params.id;
+  const res = await API.getBlogUnderTag(
+    parseInt(tagId as string),
+    renderSize,
+    renderPage.value * renderSize,
+  );
+  if (res.length) {
+    blogs.value.push(...res);
+    renderPage.value++;
+  } else renderEnd.value = true;
 }
 async function getTag() {
   const tagId = route.params.id;
@@ -47,6 +74,7 @@ const tagChain = computed(() => {
     </el-breadcrumb>
   </div>
   <ArticleList :blogs="blogs" />
+  <div id="eop"></div>
 </template>
 <style lang="scss" scoped>
 .mps-page-head {

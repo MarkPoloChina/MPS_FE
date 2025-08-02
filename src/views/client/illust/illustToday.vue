@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import {
   ArrowLeft,
   ArrowRight,
-  Calendar,
   Download,
   Sunrise,
 } from "@element-plus/icons-vue";
@@ -13,13 +12,19 @@ import type { IllustTodayObj } from "@/ts/interface/illustTodayObj";
 import type { IllustTodayDto } from "@/ts/interface/illustTodayDto";
 import { useRoute, useRouter } from "vue-router";
 import type { RemoteBaseDto } from "@/ts/interface/remoteBaseDto";
+import { getDateCST } from "@/ts/util";
 const downloadLink = ref<HTMLAnchorElement>();
 const currentIT = ref<IllustTodayObj>();
 const isImageLoading = ref(true);
 const route = useRoute();
 const router = useRouter();
-const currentDate = ref("");
+const validDates = ref<string[]>([]);
 onMounted(() => {});
+
+const getValidDates = async () => {
+  const res = await API.getIllustTodayValid(0, -1);
+  validDates.value = res;
+};
 
 const getIllustTodayFor = async (date: string) => {
   try {
@@ -38,19 +43,20 @@ const getIllustTodayFor = async (date: string) => {
   }
 };
 const initIllust = () => {
+  getValidDates();
   if (route.params.date === "latest") getIllustTodayLatest();
   else getIllustTodayFor(route.params.date as string);
 };
 const getIllustTodayLatest = async () => {
   const obj = await API.getIllustTodayLatest();
-  router.replace({ name: "illustToday", params: { date: obj.date } });
+  if (obj) router.replace({ name: "illustToday", params: { date: obj.date } });
 };
 const parseObj = (dto: IllustTodayDto, rbdto: RemoteBaseDto) => {
   if (!currentIT.value || currentIT.value.date !== dto.date)
     isImageLoading.value = true;
   const obj: IllustTodayObj = {
     url: rbdto.target.startsWith("/")
-      ? `${import.meta.env.VITE_BASE_IT_URL}${rbdto.target}/${dto.target}`
+      ? `${import.meta.env.VITE_BASE_IT_URL}${rbdto.target}/${dto.target.replace(/^\//, '')}`
       : `${rbdto.target}/${dto.target}.jpg`,
     tags: dto.tags ? dto.tags.split(",") : [],
     date: dto.date,
@@ -102,8 +108,15 @@ watch(
     immediate: true,
   },
 );
-watch(currentDate, (val) => {
-  if (val) router.push({ name: "illustToday", params: { date: val } });
+const currentDate = computed({
+  get: () => {
+    return currentIT.value?.date || "";
+  },
+  set: (val) => {
+    if (val) {
+      router.push({ name: "illustToday", params: { date: val } });
+    }
+  },
 });
 </script>
 <template>
@@ -114,6 +127,14 @@ watch(currentDate, (val) => {
         Illust Today
         <br />
         <span>{{ currentIT.date }}</span>
+        <el-date-picker
+            style="margin: 10px 0"
+            v-model="currentDate"
+            value-format="YYYY-MM-DD"
+            type="date"
+            placeholder="Pick a day"
+            :disabled-date="(date: Date) => !validDates.includes(getDateCST(date, '-'))"
+          />
       </div>
       <div class="mps-illust-info">
         <div class="mps-illust-info-line">
@@ -179,24 +200,6 @@ watch(currentDate, (val) => {
             size="large"
           />
         </div>
-        <el-popover
-          placement="left"
-          title="Date Picker"
-          :width="260"
-          trigger="click"
-        >
-          <el-date-picker
-            v-model="currentDate"
-            value-format="YYYY-MM-DD"
-            type="date"
-            placeholder="Pick a day"
-          />
-          <template #reference>
-            <div>
-              <el-button type="info" :icon="Calendar" circle size="large" />
-            </div>
-          </template>
-        </el-popover>
         <div>
           <el-button
             type="primary"
@@ -208,6 +211,16 @@ watch(currentDate, (val) => {
         </div>
       </div>
     </div>
+  </div>
+  <div v-else class="mps-illust-pictd">
+    <el-skeleton animated style="height: 500px">
+      <template #template>
+        <el-skeleton-item
+          variant="rect"
+          style="height: 100%; border-radius: 20px"
+        />
+      </template>
+    </el-skeleton>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -290,6 +303,7 @@ watch(currentDate, (val) => {
       word-break: break-word;
       margin: 10px;
       flex: auto;
+      overflow: hidden;
 
       .mps-illust-info-line {
         display: flex;

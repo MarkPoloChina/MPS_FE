@@ -3,14 +3,12 @@ import coverDefault from "@/assets/img/53061497_p0.jpg";
 import { getAListFileUrl } from "@/ts/util/path";
 import { useRouter } from "vue-router";
 import type { BlogDto } from "@/ts/interface/blogDto";
-import { ref } from "vue";
 
 defineProps({
   blogs: Array<BlogDto>,
+  renderEnd: Boolean,
 });
 const router = useRouter();
-const renderEnd = ref(true);
-
 </script>
 <template>
   <div class="mps-articles">
@@ -40,7 +38,6 @@ const renderEnd = ref(true);
         </div>
       </div>
     </div>
-    <div class="mps-article-renderend" v-if="renderEnd">END OF PAGE</div>
     <div v-if="blogs?.length === 0">
       <el-skeleton
         class="mps-article-box"
@@ -61,6 +58,8 @@ const renderEnd = ref(true);
         </template>
       </el-skeleton>
     </div>
+    <div class="mps-article-renderend" v-if="renderEnd">END OF LIST</div>
+    <div class="mps-article-renderend" v-else>SCROLL TO LOAD MORE</div>
   </div>
 </template>
 <style lang="scss" scoped>

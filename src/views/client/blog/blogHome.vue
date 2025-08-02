@@ -6,14 +6,38 @@ import { getAListFileUrl } from "@/ts/util/path";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import ArticleList from "@/components/client/blog/articleList.vue";
+import { autoLoad } from "@/ts/util";
 const latestBlogs = ref<BlogDto[]>([]);
 const router = useRouter();
+const renderSize = 20;
+const renderPage = ref(0);
+const renderEnd = ref(false);
 onMounted(() => {
+  autoLoad(loadMore);
   getLatest();
 });
 async function getLatest() {
-  const res = await API.getLatestBlogs();
+  renderPage.value = 0;
+  renderEnd.value = false;
+  const res = await API.getLatestBlogs(
+    renderSize,
+    renderPage.value * renderSize,
+  );
   latestBlogs.value = res;
+  if (res.length) renderPage.value++;
+  else renderEnd.value = true;
+}
+async function loadMore() {
+  if (renderEnd.value) return;
+  const res = await API.getLatestBlogs(
+    renderSize,
+    renderPage.value * renderSize,
+  );
+  if (res.length) {
+    latestBlogs.value.push(...res);
+    renderPage.value++;
+  }
+  else renderEnd.value = true;
 }
 const latestBlog = computed(() => {
   return latestBlogs.value[0] ?? null;
@@ -61,7 +85,8 @@ const latestBlog = computed(() => {
       </template>
     </el-skeleton>
   </div>
-  <ArticleList :blogs="latestBlogs.slice(1)" />
+  <ArticleList :blogs="latestBlogs.slice(1)" :render-end="renderEnd" />
+  <div id="eop"></div>
 </template>
 <style lang="scss" scoped>
 .mps-top-article {
