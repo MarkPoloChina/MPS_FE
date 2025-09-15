@@ -3,6 +3,7 @@ import coverDefault from "@/assets/img/53061497_p0.jpg";
 import { getAListFileUrl } from "@/ts/util/path";
 import { useRouter } from "vue-router";
 import type { BlogDto } from "@/ts/interface/blogDto";
+import { parseMetadataTags } from "@/ts/util/metadata";
 
 defineProps({
   blogs: Array<BlogDto>,
@@ -19,22 +20,34 @@ const router = useRouter();
       @click="router.push(`/blog/article/${blog.id}`)"
     >
       <el-image
-        :src="getAListFileUrl(blog.imgTarget) ?? coverDefault"
+        :src="getAListFileUrl(blog.imgTarget, blog.target) ?? coverDefault"
         fit="cover"
         class="mps-article-box-img"
         :class="[blog.imgTarget ? '' : 'hide']"
       ></el-image>
       <div class="mps-article-box-info">
         <div class="mps-article-box-title">
-          {{ blog.title }}
+          {{ JSON.parse(blog.metaJson).title }}
         </div>
         <div>
-          <el-tag v-for="tag in blog.tags" :key="tag.id" style="margin: 5px">
-            {{ tag.name }}
+          <el-tag style="margin: 5px" effect="dark">
+            {{
+              blog.tags
+                .sort((a, b) => a.level - b.level)
+                .map((tag) => tag.name)
+                .join(" / ")
+            }}
+          </el-tag>
+          <el-tag
+            v-for="tag in parseMetadataTags(blog.metaJson)"
+            :key="tag"
+            style="margin: 5px"
+          >
+            {{ tag }}
           </el-tag>
         </div>
         <div class="mps-article-box-date">
-          发布于{{ new Date(blog.fileDate).toLocaleString() }}
+          发布于{{ new Date(blog.uploadTime).toLocaleString() }}
         </div>
       </div>
     </div>

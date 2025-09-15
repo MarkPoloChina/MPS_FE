@@ -4,6 +4,8 @@ import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 
+import packageJson from "./package.json";
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx()],
@@ -15,9 +17,13 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "@/scss/global.scss" as *;',
+        additionalData: '@use "@/scss/var.scss" as *;',
       },
     },
+  },
+  define: {
+    __FE_BUILD__: JSON.stringify(new Date().toLocaleString()),
+    __FE_VERSION__: JSON.stringify(packageJson.version),
   },
   server: {
     proxy: {
@@ -33,6 +39,12 @@ export default defineConfig({
               changeOrigin: true,
               secure: true,
             },
+      "/static": {
+        target: "https://mps-cos.markpolo.cn/",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/static/, ""),
+      },
     },
   },
 });

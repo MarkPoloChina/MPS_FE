@@ -7,6 +7,7 @@ import { useRoute } from "vue-router";
 import ArticleList from "@/components/client/blog/articleList.vue";
 import { autoLoad } from "@/ts/util";
 
+defineEmits(["toc"]);
 const blogs = ref<BlogDto[]>([]);
 const currentTag = ref<TagDto>();
 const route = useRoute();

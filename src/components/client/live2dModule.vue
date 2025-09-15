@@ -55,5 +55,8 @@ onUnmounted(() => {
   @media screen and (max-width: $mobile-width) {
     display: none;
   }
+  @media (hover: none) and (pointer: coarse) {
+    display: none;
+  }
 }
 </style>

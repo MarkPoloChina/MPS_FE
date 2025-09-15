@@ -1,0 +1,54 @@
+#table-of-contents {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  span {
+    cursor: pointer;
+  }
+  span:hover {
+    text-decoration: underline;
+    color: #409eff;
+  }
+  li {
+    margin: 5px 0;
+    a {
+      color: #409eff;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    ul {
+      list-style: none;
+      padding-left: 15px;
+      margin-left: 0;
+    }
+  }
+}
+
+// override official markdown style
+.markdown-body {
+  background-color: transparent;
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  pre {
+    box-shadow: 2px 2px 8px #000;
+    background-color: #2b2b2b;
+    ol {
+      padding-left: 40px;
+      overflow: auto;
+    }
+    code {
+      tab-size: 4;
+    }
+    b.lang-name {
+      text-align: right;
+      color: #999;
+      pointer-events: none;
+      width: 100%;
+      display: block;
+    }
+  }
+}

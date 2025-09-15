@@ -8,16 +8,18 @@ import {
 } from "@element-plus/icons-vue";
 import { useRoute, useRouter } from "vue-router";
 import { API } from "@/api";
-import packageJson from "@/../package.json";
 import { onMounted, ref } from "vue";
 
 const route = useRoute();
 const router = useRouter();
 
-const FE_UPDATE = import.meta.env.VITE_FE_UPDATE;
-const FE_VERSION = packageJson.version;
+const FE_UPDATE = __FE_BUILD__;
+const FE_VERSION = __FE_VERSION__;
 const BE_UPDATE = ref("-");
 const BE_VERSION = ref("-");
+
+declare const __FE_BUILD__: string;
+declare const __FE_VERSION__: string;
 
 onMounted(() => {
   API.getDate().then((date) => {
@@ -90,12 +92,10 @@ onMounted(() => {
       </div>
       <div class="mps-footer-row">
         <div class="mps-footer-inline">
-          Build.Frontend Ver.{{ FE_VERSION }}
-          {{ FE_UPDATE }}
+          Frontend Ver.{{ FE_VERSION }} Build.{{ FE_UPDATE }}
         </div>
         <div class="mps-footer-inline">
-          Build.Backend Ver.{{ BE_VERSION }}
-          {{ BE_UPDATE }}
+          Backend Ver.{{ BE_VERSION }} Build.{{ BE_UPDATE }}
         </div>
       </div>
       <div class="mps-footer-row">

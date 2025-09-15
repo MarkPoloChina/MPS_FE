@@ -7,11 +7,14 @@ import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import ArticleList from "@/components/client/blog/articleList.vue";
 import { autoLoad } from "@/ts/util";
+import { parseMetadataTags } from "@/ts/util/metadata";
 const latestBlogs = ref<BlogDto[]>([]);
 const router = useRouter();
 const renderSize = 20;
 const renderPage = ref(0);
 const renderEnd = ref(false);
+defineEmits(["toc"]);
+
 onMounted(() => {
   autoLoad(loadMore);
   getLatest();
@@ -36,8 +39,7 @@ async function loadMore() {
   if (res.length) {
     latestBlogs.value.push(...res);
     renderPage.value++;
-  }
-  else renderEnd.value = true;
+  } else renderEnd.value = true;
 }
 const latestBlog = computed(() => {
   return latestBlogs.value[0] ?? null;
@@ -47,7 +49,7 @@ const latestBlog = computed(() => {
   <div
     class="mps-top-article"
     :style="{
-      backgroundImage: `url(${getAListFileUrl(latestBlog.imgTarget) ?? coverDefault})`,
+      backgroundImage: `url(${getAListFileUrl(latestBlog.imgTarget, latestBlog.target) ?? coverDefault})`,
     }"
     v-if="latestBlog"
   >
@@ -60,16 +62,23 @@ const latestBlog = computed(() => {
       </div>
       <div class="mps-top-article-btm">
         <div class="mps-top-article-date">
-          发布于{{ new Date(latestBlog.fileDate).toLocaleString() }}
+          发布于{{ new Date(latestBlog.uploadTime).toLocaleString() }}
         </div>
         <div class="mps-top-article-tag">
+          <el-tag effect="dark" style="margin: 5px">
+            {{
+              latestBlog.tags
+                .sort((a, b) => a.level - b.level)
+                .map((tag) => tag.name)
+                .join(" / ")
+            }}
+          </el-tag>
           <el-tag
-            v-for="tag in latestBlog.tags"
-            :key="tag.id"
-            effect="dark"
+            v-for="tag in parseMetadataTags(latestBlog.metaJson)"
+            :key="tag"
             style="margin: 5px"
           >
-            {{ tag.name }}
+            {{ tag }}
           </el-tag>
         </div>
       </div>

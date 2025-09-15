@@ -1,53 +1,17 @@
 <script setup lang="ts">
 import { API } from "@/api";
 import type { BlogDto } from "@/ts/interface/blogDto";
-import { onMounted, ref } from "vue";
-import markdownit from "markdown-it";
-import markdownitKatex from "markdown-it-katex";
-import hljs from "highlight.js";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getAListFileUrl } from "@/ts/util/path";
+import { render, getTOCHtml } from "@/ts/util/markdown";
+import { parseMetadataList, parseMetadataTags } from "@/ts/util/metadata";
 
 const route = useRoute();
 const router = useRouter();
+const emit = defineEmits(["toc"]);
 
 const content = ref("");
-const md = markdownit({
-  html: true,
-  linkify: true,
-  breaks: true,
-  xhtmlOut: true,
-  typographer: true,
-  highlight: function (str, lang) {
-    try {
-      const preCode =
-        lang && hljs.getLanguage(lang)
-          ? hljs.highlight(str, {
-              language: lang,
-              ignoreIllegals: true,
-            }).value
-          : markdownit().utils.escapeHtml(str);
-      const lines = preCode.split(/\n/).slice(0, -1);
-      let html = lines
-        .map((item, index) => {
-          return (
-            '<li><span class="line-num" data-line="' +
-            (index + 1) +
-            '"></span>' +
-            item +
-            "</li>"
-          );
-        })
-        .join("");
-      html = "<ol>" + html + "</ol>";
-      if (lines.length && lang) {
-        html += '<b class="name">' + lang + "</b>";
-      }
-      return '<pre class="hljs"><code>' + html + "</code></pre>";
-    } catch {}
-    return "";
-  },
-}).use(markdownitKatex);
 const blog = ref<BlogDto>();
 async function getBlog() {
   const blogId = route.params.id;
@@ -56,34 +20,16 @@ async function getBlog() {
   getMd(res.target);
 }
 function getMd(target: string) {
-  const baseDir = target.split("/").slice(0, -1).join("/");
-  API.getMd(import.meta.env.VITE_BASE_BLOGS_URL + target).then((res) => {
-    content.value = md.render(
-      prependImagePrefix(
-        res,
-        import.meta.env.VITE_BASE_BLOGS_URL + baseDir + "/",
-      ),
-    );
+  API.getMd(import.meta.env.VITE_BASE_BLOGS_URL + target).then(async (res) => {
+    content.value = await render(res, target);
+    emit("toc", getTOCHtml());
   });
-}
-function prependImagePrefix(mdContent: string, prefix: string): string {
-  const imageRegex = /!\[(.*?)\]\((.*?)\)/g;
-
-  const updatedContent = mdContent.replace(imageRegex, (match, p1, p2) => {
-    if (
-      !p2.startsWith("http://") &&
-      !p2.startsWith("https://") &&
-      !p2.startsWith("data:")
-    ) {
-      return `![${p1}](${prefix}${p2})`;
-    }
-    return match;
-  });
-
-  return updatedContent;
 }
 onMounted(() => {
   getBlog();
+});
+onUnmounted(() => {
+  emit("toc", "");
 });
 </script>
 <template>
@@ -101,6 +47,10 @@ onMounted(() => {
           >
             {{ tag.name }}
           </el-breadcrumb-item>
+          <el-breadcrumb-item
+          >
+            {{ blog?.title }}
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </template>
       <template #content>
@@ -109,24 +59,36 @@ onMounted(() => {
         </div>
       </template>
       <template #extra>
+        <el-tag style="margin: 5px" size="large" effect="dark">
+          {{
+            blog.tags
+              .sort((a, b) => a.level - b.level)
+              .map((tag) => tag.name)
+              .join(" / ")
+          }}
+        </el-tag>
         <el-tag
-          v-for="tag in blog.tags"
-          :key="tag.id"
+          v-for="tag in parseMetadataTags(blog.metaJson)"
+          :key="tag"
           style="margin: 5px"
           size="large"
         >
-          {{ tag.name }}
+          {{ tag }}
         </el-tag>
       </template>
 
-      <el-descriptions :column="1" size="large">
-        <el-descriptions-item label="发布于">
-          {{ new Date(blog.fileDate).toLocaleString() }}
+      <el-descriptions :column="1" border style="margin: 10px 0">
+        <el-descriptions-item
+          :label="meta.key"
+          v-for="meta in parseMetadataList(blog.metaJson, true)"
+          :key="meta.key"
+        >
+          {{ meta.value }}
         </el-descriptions-item>
       </el-descriptions>
       <el-image
         v-if="blog.imgTarget"
-        :src="getAListFileUrl(blog.imgTarget)!"
+        :src="getAListFileUrl(blog.imgTarget, blog.target)!"
         fit="contain"
       ></el-image>
     </el-page-header>
@@ -141,7 +103,6 @@ onMounted(() => {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px 40px 20px 40px;
   border-radius: 10px;
-  word-break: break-all;
   @media screen and (max-width: $pad-width) {
     padding: 20px 10px 20px 10px;
   }
@@ -165,6 +126,18 @@ onMounted(() => {
   .mps-title {
     font-weight: bold;
     font-size: 1.5rem;
+  }
+
+  @media screen and (max-width: $pad-width) {
+    :deep(.el-page-header__header) {
+      flex-direction: column;
+      .el-page-header__left {
+        margin-right: 0;
+      }
+      .el-page-header__extra {
+        margin-top: 10px;
+      }
+    }
   }
 }
 </style>

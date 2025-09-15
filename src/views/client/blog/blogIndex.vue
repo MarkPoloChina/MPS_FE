@@ -4,7 +4,7 @@ import type { TagDto } from "@/ts/interface/tagDto";
 import { onMounted, ref } from "vue";
 import TagTree from "@/components/client/blog/tagTree.vue";
 import { useRouter } from "vue-router";
-import { Link } from "@element-plus/icons-vue";
+import { Link, Collection } from "@element-plus/icons-vue";
 const tags = ref<TagDto[]>([]);
 const router = useRouter();
 onMounted(() => {
@@ -15,6 +15,19 @@ async function getTags() {
   tags.value = res;
 }
 const drawerVisible = ref(false);
+const drawerVisible2 = ref(false);
+function scrollToc(e: MouseEvent) {
+  if (!(e.target instanceof HTMLElement)) return;
+  const target = e.target.closest("span[data-id]") as HTMLElement;
+  if (target) {
+    const id = target.dataset.id;
+    const el = document.getElementById(id!);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+}
+const toc = ref("");
 </script>
 <template>
   <div>
@@ -30,8 +43,18 @@ const drawerVisible = ref(false);
           <el-button type="primary" @click="drawerVisible = true">
             <el-icon><Link /> </el-icon>
           </el-button>
+          <el-button type="primary" @click="drawerVisible2 = true" v-if="toc">
+            <el-icon><Collection /> </el-icon>
+          </el-button>
         </div>
-        <RouterView :key="router.currentRoute.value.fullPath" />
+        <RouterView
+          :key="router.currentRoute.value.fullPath"
+          @toc="
+            (t: string) => {
+              toc = t;
+            }
+          "
+        />
       </div>
       <div class="right-side">
         <div class="mps-tag-menu-container">
@@ -42,15 +65,19 @@ const drawerVisible = ref(false);
             <tag-tree :tag="tag" v-for="tag in tags" :key="tag.id" />
           </el-menu>
         </div>
+        <div class="mps-toc-container" v-if="toc">
+          <span class="markdown-toc-title">TOC</span>
+          <div class="markdown-toc" v-html="toc" @click="scrollToc"></div>
+        </div>
       </div>
     </div>
     <el-drawer
       v-model="drawerVisible"
       direction="rtl"
       size="100%"
-      title=""
+      title="INDEX"
       append-to-body
-      class="mps-drawer-tag-menu"
+      class="mps-drawer"
     >
       <div class="mps-drawer-tag-menu-container">
         <el-menu>
@@ -72,6 +99,17 @@ const drawerVisible = ref(false);
         </el-menu>
       </div>
     </el-drawer>
+    <el-drawer
+      v-if="toc"
+      v-model="drawerVisible2"
+      direction="ltr"
+      size="100%"
+      title="TOC"
+      append-to-body
+      class="mps-drawer"
+    >
+      <div class="markdown-toc" v-html="toc" @click="scrollToc"></div>
+    </el-drawer>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -89,8 +127,7 @@ const drawerVisible = ref(false);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px 250px;
+  padding: 20px 200px;
   @media screen and (max-width: $large-desktop-width) {
     padding: 20px 100px;
   }
@@ -112,9 +149,10 @@ const drawerVisible = ref(false);
     .mps-hide-tag-menu-container {
       display: none;
       @media screen and (max-width: $mobile-width) {
-        width: 100%;
+        margin: 0 10px;
+        width: calc(100% - 20px);
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         margin-bottom: 10px;
       }
     }
@@ -122,7 +160,7 @@ const drawerVisible = ref(false);
   .right-side {
     width: 20%;
     max-width: 300px;
-    flex: none;
+    flex-shrink: 0;
     @media screen and (max-width: $mobile-width) {
       display: none;
     }
@@ -132,22 +170,34 @@ const drawerVisible = ref(false);
       background-color: white;
       padding: 10px 0;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
     }
     .el-menu {
       background-color: transparent;
       border: none;
     }
-  }
-}
-</style>
-<style lang="scss">
-.mps-drawer-tag-menu {
-  --el-drawer-bg-color: rgba(255, 255, 255, 0.8);
-  .mps-drawer-tag-menu-container {
-    ul {
+    .mps-toc-container {
+      margin-left: 10px;
       border-radius: 10px;
+      background-color: white;
+      padding: 10px 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      .markdown-toc-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        display: block;
+        text-align: center;
+      }
+      .markdown-toc {
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+      }
     }
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 }
 </style>
