@@ -1,0 +1,11 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nginx_mps_fe
+    ports:
+      - "8780:80"
+    volumes:
+      - /docker/mps/nginx/core.conf:/etc/nginx/conf.d/core.conf
+    restart: "unless-stopped"
